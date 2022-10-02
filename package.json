@@ -1,5 +1,5 @@
 {
-  "name": "checker-as-is",
+  "name": "@pro-script/as-is",
   "version": "0.9.32 (work in progress)",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.js",
