@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.32 (work in progress)",
+  "version": "0.9.34",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.js",
   "type": "module",
@@ -9,16 +9,15 @@
   },
   "directories": {
     "lib": "lib",
-    "tests": "tests"
+    "test": "tests"
   },
   "scripts": {
     "test": "node tests/pro-code.test.js",
-    "test:mocha": "./node_modules/.bin/mocha tests/as-is.class.test.js",
+    "test:mocha": "mocha tests/as-is.class.test.js",
     "test:browser": "npx browser-sync --start"
   },
   "keywords": [
     "as-is",
-    "checker-as-is",
     "js-inteface",
     "interface-check",
     "javascript",
@@ -74,8 +73,8 @@
   "author": "Kotowolod <kotowolod@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "chai": "4.3.4",
-    "mocha": "9.1.3"
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
   },
   "files": [
     "*.js",
@@ -88,12 +87,12 @@
     "README.md",
     "LICENSE"
   ],
-  "homepage": "https://github.com/KotoWolod/checker-as-is",
+  "homepage": "https://github.com/pro-script/as-is",
   "bugs": {
-    "url": "https://github.com/KotoWolod/checker-as-is/issues"
+    "url": "https://github.com/pro-script/as-is/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KotoWolod/checker-as-is"
+    "url": "git+https://github.com/pro-script/as-is.git"
   }
 }
