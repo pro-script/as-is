@@ -11,7 +11,7 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
 4. [Install](#install)
 5. [API](#api)
     - [Basics](#basics)
-    - [Basic Usage](#Basic Usage)
+    - [Basic Usage](#basic-usage)
     - [You can even check the class type](#you-can-even-check-the-class-type)
     - [Checking one repeated type](#checking-one-repeated-type)
     - [Strict typing](#strict-typing)
