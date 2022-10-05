@@ -23,8 +23,8 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
     - [Interfaces](#interfaces)
         - [Interfaces Basic](#interfaces-basic)
         - [Interfaces Basic usage](#interfaces-basic-usage)
-    - [IF/ELSE/END](#if-else-end)
-        - [IF/ELSE/END Basic usage](#if-else-end-basic-usage)
+    - [IF/ELSE/END](#ifelseend)
+        - [IF/ELSE/END Basic usage](#ifelseend-basic-usage)
     - [Utility](#utility)
     - [Aliases](#aliases)
 6. [Enum type](#enum-type)
@@ -397,7 +397,7 @@ const multiType = 'Number|String|Boolean';
 as[multiType]({});
 // TypeError: Object is not a(an) Number|String|Boolean
 ```
-## Interfaces
+# Interfaces
 ## Interfaces Basic
 First you need create an interface, which will be stored in instance of checker in private area **#interfaces**.
 ```js
