@@ -34,7 +34,7 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
 8. [Settings](#settings)
 9. [Micro-tests](#micro-tests)
    - [Micro-tests Basic](#micro-tests-basic)
-   - [METHOD usage](#methods-usage)
+   - [METHOD usage](#method-usage)
    - [PROPERTY usage](#property-usage)
    - [IS usage](#is-usage)
    - [passed and failed usage](#passed-and-failed-usage)
@@ -44,6 +44,8 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
 This library respects the principle of code readability. The code should tell a story.
 
     I.want.to.tell.you.a.story(myStory)
+
+[<- go back](#please-read-the-pro-script-concept-first)
 
 ## The main idea is to use proxies instead of functions
 In traditional way we use functions to do the call
@@ -113,6 +115,7 @@ const sum_first_plus_second = as.first_number(2) + as.second_number(3);     // t
 ```
 And, of course, the is.doctor_prescription a_string method is not implemented, because doctor_prescription_a_string_variable is just an unquoted string variable.
 
+[<- go back](#please-read-the-pro-script-concept-first)
 # Summary of Features 
 **Types list with alias name:** 
 - Number | number 
@@ -227,8 +230,10 @@ npm i @pro-script/as-is
 <script type="module" src="https://unpkg.com/@pro-script/as-is@latest/src/as-is.esModule.min.js"></script>
 
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 # API
 **Checker-as-is** is a stateful module please keep this in mind.
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Basics
 ```js
 is['js type here']('argument here') // true | false
@@ -252,6 +257,7 @@ is.number('example string'); // false
 as.number('example string'); // TypeError: String is not a(an) number
 optional.number('example string'); // TypeError: String is not a(an) number
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Basic Usage
 ```js
 import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
@@ -301,6 +307,7 @@ example(text, 2, true)
 //[ text, 2, true ]
 
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ### You can even check the class type
 ```js
 import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
@@ -317,7 +324,7 @@ as.class(instance);// class instance
 
 
 ```
-
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Checking one repeated type
 In object, array, set and map. All types ending with 's' will be checked.
 ```js
@@ -327,6 +334,7 @@ is.Errors(exampleSet) && as.Errors(exampleSet);
 is.BigInts(exampleMap) && as.BigInts(exampleMap); 
 is.BigInts(exampleMap) && optional.BigInts(exampleMap); 
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Strict typing
 ### Strict typing basics
 ```js
@@ -336,6 +344,7 @@ strict['js type here']`variable name`;// <-- meta programing magic
 strict.string`name`;
 strict.name = 'Stephen Hawking';
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ### Strict typing basic usage
 ```js
 import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
@@ -368,7 +377,7 @@ strict.undefined`set`;
 //or
 strict.object`variables`;
 ```
-
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Checking multiple types
 When a variable is part of more than one type, you can also check for that. 
 ### Multiple Basic
@@ -381,6 +390,7 @@ multi`couple js type here`('argument here'); // argument | TypeError
 multi(['couple js type here'])('argument here'); // argument | TypeError
 
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ### Multiple Basic usage
 ```js
 as.NumberStringBoolean(2022);
@@ -397,6 +407,7 @@ const multiType = 'Number|String|Boolean';
 as[multiType]({});
 // TypeError: Object is not a(an) Number|String|Boolean
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 # Interfaces
 ## Interfaces Basic
 First you need create an interface, which will be stored in instance of checker in private area **#interfaces**.
@@ -456,6 +467,7 @@ import MyInterface from './MyInterface.interface.js';
 const { IMyInterface } = Interface({ IMyInterface: new MyInterface });
 as.IMyInterface = { name: 'Tomas', age: 33, surName: 'Andersen' };
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ### Interfaces Basic usage
 ```js
 const { IUser, IBook } = Interface({
@@ -495,6 +507,7 @@ You can to get all interfaces from Checker instance like this:
 const intefaces = Interface({});
 // => { IUser, IBook, IMyInterface }
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## IF/ELSE/END
 These commands are an alias for the "is" command and are added to make the code easier to read.
 ### IF/ELSE/END Basic usage
@@ -549,15 +562,16 @@ someFunction(['Mike', 'Liza']);
 
 
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Utility
-A simple method to get type of argument
+A simple method to get the type of argument
 ```javascript
 get.type('any argument here'); // type of argument
 
 get.type(43); // Number
 get.type(Checker); // Checker
 ```
-
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Aliases
 You can check the following types by "is", "as" or javascript, but this looks more readable
 ```javascript
@@ -588,12 +602,13 @@ as.Chrome() // navigator | TypeError
 navigator.userAgent.includes('Chrome') // true    
     
 ```
-
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Enum type
 ### Enum type Basic
 ```js
 Enum.init('enum object here')
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ### Enum type Basic usage
 Use increment
 ```js
@@ -670,7 +685,7 @@ Enum.init({
 //   GREEN: 20,
 //   BLUE: 30
 // }
-Enum.init({
+const enumExample = Enum.init({
     [Enum.step]: 10,
     ROOF: Enum.dec,
     FLOOR: 30,
@@ -689,6 +704,7 @@ Check the Enum type like this
 ```js
 as.Enum(enumExample) && as.enum(enumExample);
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Integration
 You can integrate any feature you want.
 ```js
@@ -718,6 +734,7 @@ await example('text', 2, true)
 await isUrl?.up('https://not-google.com');
 // TypeError: url is down
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## Settings
 To change error message you can reload Checker.errorMsg.
 If you want to disable throwing error please set checker.disabled = true.
@@ -732,6 +749,7 @@ const { multi, strict, as, is } = checker;
 checker.disabled = true;
 // TypeError: Number, really? I'm not sure that is a(an) string
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 # Micro-tests
 A micro-test is better than no tests.
 ## Micro-tests Basic
@@ -759,6 +777,7 @@ FINISH and STOP.anyName is the
 
 FINISH also counts the number of failed tests and throws errors. Because START, STOP, and FINISH are proxies, you don't need to call START.anyName(). Just leave it without brackets.
 
+[<- go back](#please-read-the-pro-script-concept-first)
 # Micro-tests Basic usage
 There are only five main methods: METHOD, PROPERTY, IS, passed and failed.
 
@@ -776,6 +795,7 @@ const object = {
 };
 METHOD.foo(object) // ✓ METHOD.foo passed
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## PROPERTY usage
 PROPERTY strictly checks properties.
 ```javascript
@@ -791,6 +811,7 @@ const object = {
 PROPERTY.foo(object) // ✗ PROPERTY.foo failed
 PROPERTY.property1(object) // ✓ PROPERTY.property1 passed
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## IS usage
 The IS function is a wrapper of "is" method, but with four additional methods like: true, false, ok, notOk. You can check any type with IS, what can do "is".
 ```javascript
@@ -822,6 +843,7 @@ IS.false(object.property1 < 1);
 IS.ok(object.foo().includes('world'));
 IS.notOk(object.foo().includes('!'));
 ```
+[<- go back](#please-read-the-pro-script-concept-first)
 ## passed and failed usage
 This small functionality will be useful when you need to build your own testing scenario, but don't want to use IS for checking.
 ```javascript
