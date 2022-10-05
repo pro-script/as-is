@@ -218,11 +218,14 @@ as.StringNumber(example({ name: 'text', age: 12, pages:['page'] }));
 ## Install
 **Node.js**
 ```sh
-npm i checker-as-is -S
+npm i @pro-script/as-is
 ```
 **Browsers**
 ```html
-<script type="module" src="https://unpkg.com/checker-as-is@latest/src/as-is.browser.min.js"></script>
+<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/src/as-is.browser.min.js"></script>
+// or es module
+<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/src/as-is.esModule.min.js"></script>
+
 ```
 # API
 **Checker-as-is** is a stateful module please keep this in mind.
