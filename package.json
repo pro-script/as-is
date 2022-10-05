@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.34",
+  "version": "0.9.4",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.js",
   "type": "module",
@@ -12,7 +12,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/pro-code.test.js",
+    "test": "node tests/pro-script.test.js",
     "test:mocha": "mocha tests/as-is.class.test.js",
     "test:browser": "npx browser-sync --start"
   },

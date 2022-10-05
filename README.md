@@ -1,8 +1,46 @@
-# @pro-script/as-is v0.9.34 RC3
+# @pro-script/as-is v0.9.4 RC3
+
+## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 
 Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object, enum type and more.
 Follow me on twitter for further updates [twitter](https://twitter.com/VolodymyrKotov)
 
+1. [The principle of readable code](#the-principle-of-readable-code)
+2. [The main idea is to use proxies instead of functions](#the-main-idea-is-to-use-proxies-instead-of-functions)
+3. [Summary of Features](#summary-of-features)
+4. [Install](#install)
+5. [API](#api)
+    - [Basics](#basics)
+    - [Basic Usage](#Basic Usage)
+    - [You can even check the class type](#you-can-even-check-the-class-type)
+    - [Checking one repeated type](#checking-one-repeated-type)
+    - [Strict typing](#strict-typing)
+        - [Strict typing basics](#strict-typing-basics)
+        - [Strict typing basic usage](#strict-typing-basic-usage)
+    - [Checking multiple types](#checking-multiple-types)
+        - [Multiple Basic](#multiple-basic)
+        - [Multiple Basic usage](#multiple-basic-usage)
+    - [Interfaces](#interfaces)
+        - [Interfaces Basic](#interfaces-basic)
+        - [Interfaces Basic usage](#interfaces-basic-usage)
+    - [IF/ELSE/END](#if-else-end)
+        - [IF/ELSE/END Basic usage](#if-else-end-basic-usage)
+    - [Utility](#utility)
+    - [Aliases](#aliases)
+6. [Enum type](#enum-type)
+    - [Enum type Basic](#enum-type-basic)
+    - [Enum type Basic usage](#enum-type-basic-usage)
+7. [Integration](#integration)
+8. [Settings](#settings)
+9. [Micro-tests](#micro-tests)
+   - [Micro-tests Basic](#micro-tests-basic)
+   - [METHOD usage](#methods-usage)
+   - [PROPERTY usage](#property-usage)
+   - [IS usage](#is-usage)
+   - [passed and failed usage](#passed-and-failed-usage)
+    
+
+## The principle of readable code
 This library respects the principle of code readability. The code should tell a story.
 
     I.want.to.tell.you.a.story(myStory)
@@ -196,7 +234,7 @@ optional['js type here' + 'Undefined' + 'Null']('argument here') // argument | T
 ```
 An example
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 const { multi, strict, as, is, optional } = new Checker();
 
 
@@ -213,7 +251,7 @@ optional.number('example string'); // TypeError: String is not a(an) number
 ```
 ## Basic Usage
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 const { multi, strict, as, is, optional }  = new Checker();
 
 function example(arg, arg2, arg3) {
@@ -236,7 +274,7 @@ console.log(result);
 ```
 or next syntax
 ```js 
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 const { multi, strict, as, is, optional }  = new Checker();
 
 function example(arg, arg2, arg3) {
@@ -249,7 +287,7 @@ example(text, 2, true)
 ```
 or more extraordinary syntax
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 const { multi, strict, as, is, optional }  = new Checker();
 
 function example(arg, arg2, arg3,
@@ -262,7 +300,7 @@ example(text, 2, true)
 ```
 ### You can even check the class type
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 const instance = new Checker();
 
 is.Checker(Checker); // true
@@ -287,7 +325,7 @@ is.BigInts(exampleMap) && as.BigInts(exampleMap);
 is.BigInts(exampleMap) && optional.BigInts(exampleMap); 
 ```
 ## Strict typing
-### Basics
+### Strict typing basics
 ```js
 strict['js type here']`variable name`;// <-- meta programing magic
 ```
@@ -295,9 +333,9 @@ strict['js type here']`variable name`;// <-- meta programing magic
 strict.string`name`;
 strict.name = 'Stephen Hawking';
 ```
-### Basic usage
+### Strict typing basic usage
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 const { multi, strict, as, is } = new Checker();
 strict.string`name`.name = 'Mike';
 strict.number`age`;
@@ -330,7 +368,7 @@ strict.object`variables`;
 
 ## Checking multiple types
 When a variable is part of more than one type, you can also check for that. 
-### Basic
+### Multiple Basic
 ```js
 is['couple js type here']('argument here'); // true | false
 as['couple js type here']('argument here'); // argument | TypeError
@@ -340,7 +378,7 @@ multi`couple js type here`('argument here'); // argument | TypeError
 multi(['couple js type here'])('argument here'); // argument | TypeError
 
 ```
-### Basic usage
+### Multiple Basic usage
 ```js
 as.NumberStringBoolean(2022);
 as.Number_String_Boolean_Symbol_Function_BigInt_Array([]);
@@ -357,7 +395,7 @@ as[multiType]({});
 // TypeError: Object is not a(an) Number|String|Boolean
 ```
 ## Interfaces
-## Basic
+## Interfaces Basic
 First you need create an interface, which will be stored in instance of checker in private area **#interfaces**.
 ```js
 const checker = new Checker();
@@ -415,7 +453,7 @@ import MyInterface from './MyInterface.interface.js';
 const { IMyInterface } = Interface({ IMyInterface: new MyInterface });
 as.IMyInterface = { name: 'Tomas', age: 33, surName: 'Andersen' };
 ```
-### Basic usage
+### Interfaces Basic usage
 ```js
 const { IUser, IBook } = Interface({
     IUser: {
@@ -456,7 +494,7 @@ const intefaces = Interface({});
 ```
 ## IF/ELSE/END
 These commands are an alias for the "is" command and are added to make the code easier to read.
-### Basic
+### IF/ELSE/END Basic usage
 When you need to use a couple of variants of function or method calls, you can do the following
 ```javascript
 // Case 1
@@ -549,11 +587,11 @@ navigator.userAgent.includes('Chrome') // true
 ```
 
 ## Enum type
-### Basic
+### Enum type Basic
 ```js
 Enum.init('enum object here')
 ```
-### Basic usage
+### Enum type Basic usage
 Use increment
 ```js
 Enum.init({
@@ -651,7 +689,7 @@ as.Enum(enumExample) && as.enum(enumExample);
 ## Integration
 You can integrate any feature you want.
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from 'checker-as-is';
+import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
 import axios from "axios";
 
 const integrate = {
@@ -691,5 +729,104 @@ const { multi, strict, as, is } = checker;
 checker.disabled = true;
 // TypeError: Number, really? I'm not sure that is a(an) string
 ```
-#
+# Micro-tests
+A micro-test is better than no tests.
+## Micro-tests Basic
+Micro-test has two syntaxs. You can choose what you like.
+```javascript
+START.anyName;
+    START.anyName;
+    // your test here
+    STOP.anyName;
+FINISH.anyName;
+// or
+START.anyName {
+    START.anyName {
+        // your test here
+    } STOP.anyName
+} FINISH.anyName
+```
+Under the hood START.anyName is the 
+
+    console.time('anyName');
+
+FINISH and STOP.anyName is the
+
+    console.timeEnd('anyName')
+
+FINISH also counts the number of failed tests and throws errors. Because START, STOP, and FINISH are proxies, you don't need to call START.anyName(). Just leave it without brackets.
+
+# Micro-tests Basic usage
+There are only five main methods: METHOD, PROPERTY, IS, passed and failed.
+
+## METHOD usage
+METHOD strictly checks methods.
+```javascript
+import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
+const checker = new Checker();
+const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
+
+METHOD.toString(''); // ✗ METHOD.toString failed
+const object = {
+    foo: ()=> {}
+};
+METHOD.foo(object) // ✓ METHOD.foo passed
+```
+## PROPERTY usage
+PROPERTY strictly checks properties.
+```javascript
+import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
+const checker = new Checker();
+const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
+
+const object = {
+    foo: ()=> 'Hello world',
+    property1: 1
+};
+PROPERTY.foo(object) // ✗ PROPERTY.foo failed
+PROPERTY.property1(object) // ✓ PROPERTY.property1 passed
+```
+## IS usage
+The IS function is a wrapper of "is" method, but with four additional methods like: true, false, ok, notOk. You can check any type with IS, what can do "is".
+```javascript
+import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
+const checker = new Checker();
+const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
+
+IS.string(''); // ✓ IS.string passed
+IS.objectUndeinedStringNumber(2); // ✓ IS.objectUndeinedStringNumber passed
+```
+Any testing framework has many methods and you should learn them before testing. Such as ().to.be.equal or assert.isOk() and more and that means a test development takes more time.
+Using the one percent improvement principle, you can reduce this time to a minimum by using only IS.true or IS.false and IS.ok or IS.notOk. Nothing else is needed for microtesting. When you need to test anything, you will use a different testing framework.
+```javascript
+import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
+const checker = new Checker();
+const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
+
+const object = {
+   foo: ()=> 'Hello world',
+   property1: 1
+};
+IS.object(object);
+IS.string(object.foo());
+IS.number(object.property1);
+IS.true(object.property1 >=1);
+IS.false(object.property1 < 1);
+IS.ok(object.foo().includes('world'));
+IS.notOk(object.foo().includes('!'));
+```
+## passed and failed usage
+This small functionality will be useful when you need to build your own testing scenario, but don't want to use IS for checking.
+```javascript
+import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
+const checker = new Checker();
+const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
+
+(1 < 2) ? passed.one('Is a won'): failed.two('is a loss');
+```
 **No dependencies except of json5 in vendor folder, pure javascript code. No selfish syntax, if you know javascript you can write code without any challenges.**
