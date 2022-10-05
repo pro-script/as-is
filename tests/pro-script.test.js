@@ -7,6 +7,16 @@ const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroT
 import * as values_ from './values.js';
 const values = Object.assign({}, values_);
 
+const hello = 'Hello';
+const world = 'world';
+
+const resultString = as.string(hello) + as.string(world); // -> Hello world
+console.log(as.string(resultString)); // type checked and returned -> Hello world
+is.string(resultString)
+    ? console.log('this is string')
+    : console.log('this is '+ get.type(resultString));
+
+
 is.node() && (
     values.buffer_ = new Buffer.alloc(5),
     values.structural_.push(values.buffer_)

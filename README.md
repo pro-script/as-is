@@ -12,6 +12,8 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
 5. [API](#api)
     - [Basics](#basics)
     - [Basic Usage](#basic-usage)
+    - [String](#is.string-as.string)
+    - [Number](#is.number-as.number)
     - [You can even check the class type](#you-can-even-check-the-class-type)
     - [Checking one repeated type](#checking-one-repeated-type)
     - [Strict typing](#strict-typing)
@@ -41,7 +43,7 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
     
 
 ## The principle of readable code
-This library respects the principle of code readability. The code should tell a story.
+This library respects the principle of code readability. The code should tell a story. See [details](https://github.com/pro-script/The-concept#the-principle-of-readable-code)
 
     I.want.to.tell.you.a.story(myStory)
 
@@ -233,6 +235,7 @@ npm i @pro-script/as-is
 [<- go back](#please-read-the-pro-script-concept-first)
 # API
 **Checker-as-is** is a stateful module please keep this in mind.
+
 [<- go back](#please-read-the-pro-script-concept-first)
 ## Basics
 ```js
@@ -308,6 +311,72 @@ example(text, 2, true)
 
 ```
 [<- go back](#please-read-the-pro-script-concept-first)
+
+### is.string && as.string
+**Working examples**
+```javascript
+is.string('text') // -> true
+is.String('text') // -> true
+is.sTrInG('text') // -> true. Allways type will be converted to lowercase
+is.string(2) // -> false
+```
+```javascript
+as.string('text') // -> 'text'
+as.String('text') // -> 'text'
+as.sTrInG('text') // -> 'text'. Allways type will be converted to lowercase
+as.string(2) // -> TypeError: Number is not a(an) string
+```
+```javascript
+const hello = 'Hello';
+const world = 'world';
+const two = 2;
+
+const resultString = as.string(hello) + as.string(world); // -> Hello world
+console.log(as.string(resultString)); // type checked and returned -> Hello world
+
+is.string(resultString)
+        ? console.log('this is string')
+        : console.log('this is '+ get.type(resultString));
+
+!is.string(two)
+        ? console.log('this is string')
+        : console.log('this is '+ get.type(two));
+ ```
+[<- go back](#please-read-the-pro-script-concept-first)
+
+### is.number && as.number
+**Working examples**
+```javascript
+is.string('text') // -> true
+is.String('text') // -> true
+is.sTrInG('text') // -> true. Allways type will be converted to lowercase
+is.string(2) // -> false
+```
+```javascript
+as.string('text') // -> 'text'
+as.String('text') // -> 'text'
+as.sTrInG('text') // -> 'text'. Allways type will be converted to lowercase
+as.string(2) // -> TypeError: Number is not a(an) string
+```
+```javascript
+const hello = 'Hello';
+const world = 'world';
+const two = 2;
+
+const resultString = as.string(hello) + as.string(world); // -> Hello world
+console.log(as.string(resultString)); // type checked and returned -> Hello world
+
+is.string(resultString)
+        ? console.log('this is string')
+        : console.log('this is '+ get.type(resultString));
+
+!is.string(two)
+        ? console.log('this is string')
+        : console.log('this is '+ get.type(two));
+ ```
+[<- go back](#please-read-the-pro-script-concept-first)
+
+
 ### You can even check the class type
 ```js
 import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
@@ -854,4 +923,6 @@ const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroT
 
 (1 < 2) ? passed.one('Is a won'): failed.two('is a loss');
 ```
-**No dependencies except of json5 in vendor folder, pure javascript code. No selfish syntax, if you know javascript you can write code without any challenges.**
+
+## No dependencies except of json5 in vendor folder, pure javascript code. No selfish syntax, if you know javascript you can write code without any challenges.
+[<- go back](#please-read-the-pro-script-concept-first)
