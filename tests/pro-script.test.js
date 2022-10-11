@@ -1,119 +1,345 @@
-const modules = await import('../index.js')
+import {
+    date_,
+    generator_,
+    structural_,
+    withLengthEmpty,
+    withLengthNotEmpty
+} from "./values.js";
 
-const { Checker, BaseInterface, Enum, MicroTest } =  modules;
+const modules = await import('../index.js');
+import MacroInitialization from './macro.js';
+import MacroInstance from './macroTests/instance.macro.test.js';
+import MacroValues from './macroTests/values.macro.test.js';
+
+const { Checker, BaseInterface, Enum, MicroTest, Utility } =  modules;
 const checker = new Checker();
-const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
-const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
+const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get, macro }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
 import * as values_ from './values.js';
+import primitiveTypes from "../lib/types/primitiveTypes.js";
 const values = Object.assign({}, values_);
-
-const hello = 'Hello';
-const world = 'world';
-
-const resultString = as.string(hello) + as.string(world); // -> Hello world
-console.log(as.string(resultString)); // type checked and returned -> Hello world
-is.string(resultString)
-    ? console.log('this is string')
-    : console.log('this is '+ get.type(resultString));
-
+const m = Utility.macro;
 
 is.node() && (
     values.buffer_ = new Buffer.alloc(5),
     values.structural_.push(values.buffer_)
 );
 
-START.all;
-    START.Instance;
-        IS.class(Checker);
-        IS.Checker(Checker);
-        const instance = new Checker();
-        ['is', 'as', 'IF', 'ELSE', 'optional'].forEach((methodName)=> IS.Checker(instance[methodName]));
-        IS.null(instance.END);
-        IS.Checker(instance);
-        METHOD.multi(instance);
-        METHOD.Interface(instance);
-        PROPERTY.strict(instance);
-        PROPERTY.get(instance);
+START.all
+{
+    START.macro(30)
+    {
+        [MacroInitialization].macro;
+        const results = [
+            _ => this.is.a.first.macro,
+            /this.is.a.second macro/,
+            'this is a third macro',
+            0xDad
+        ].macro;
+        IS.array(results);
+        CHECK.RESULTS0(results[0] === 'macro value');
+        CHECK.RESULTS1(results[1] === 2);
+    }
+    STOP.macro;
+    START.getType(44)
+    {
+        CHECK['get.type'](!!get.type())
+        values.primitive_.forEach((type) => CHECK[get.type(type)](!!get.type(type)));
+        values.structural_.forEach((type) => CHECK[get.type(type)](!!get.type(type)));
+    }
+    STOP.getType;
+    START.Instance(51)
+    {
+        [MacroInstance].macro;
+        [
+            'check.constructor',
+            'check.class',
+            'check.methods'
+        ].macro;
+    }
     STOP.Instance;
-    START.CheckMethods;
+    START.CheckMethods(61)
+    {
         ['alias', 'CheckPlatform', 'iterator', 'nullish', 'bun', 'browser', 'browserFromList', 'node', 'any',
             'multiCheck', 'multiType', 'defineMethod', 'duplicateError', 'numerous', 'primitive', 'array', 'json',
             'json5', 'empty', 'notEmpty', 'date', 'null', 'structural', 'class']
-            .forEach((methodName)=> METHOD[methodName](Checker));
-    as.class(BaseInterface);
+            .forEach((methodName) => METHOD[methodName](Checker));
+        IS.class(BaseInterface);
+    }
     STOP.CheckMethods;
-    START.CheckValues
-        IS.ok(true);
-        IS.true(true);
-        IS.notOk(false);
-        IS.false(false);
-        IS.null(null);
-        IS.undefined();
-        IS.empty([]);
-        IS.argument([]);
-        IS.true(5 === 5);
-        IS.true(5 > 4);
-        IS.true(5 >= 5);
-        IS.true([2].includes(2));
+    START.CheckValues(70)
+    {    [MacroValues].macro;
+        [_ => check.values].macro;
+    }
     STOP.CheckValues;
-    START.optional;
-        IS.undefined(optional.string())
-    STOP.optional;
-    START.newValidators;
-        if(is.node() || is.bun()){
-            IS.undefined(values.iterable.forEach((item)=> as.iterable(item)))
+    START.newValidatorsPositive(75)
+    {
+        if (is.node() || is.bun()) {
+            IS.undefined(values.iterable.forEach((item) => CHECK.iterable(is.iterable(item))))
             IS.object(is.argument(values.object_) && as.argument(values.object_))
             IS.array(is.argument(values.array_) && as.argument(values.array_))
             IS.undefined(is.nullish() && as.nullish())
             IS.process(is.node() && as.node())
-        } else if(is.browser()) {
-            IS.undefined(values.iterable.forEach((item)=> as.iterable(item)))
+        } else if (is.browser()) {
+            IS.undefined(values.iterable.forEach((item) => CHECK.iterable(is.iterable(item))))
             IS.object(is.argument(values.object_) && as.argument(values.object_))
             IS.array(is.argument(values.array_) && as.argument(values.array_))
             IS.undefined(is.nullish() && as.nullish())
             IS.Navigator(is.browser() && as.browser())
         }
-    STOP.newValidators;
-    START.if_else
+    }
+    STOP.newValidatorsPositive;
+    START.newValidatorsNegative(92)
+    {
+        if (is.node() || is.bun()) {
+            values.iterable.forEach((item) => CHECK[`not iterable`](!is.iterable(0)));
+            CHECK['not argument'](!is.argument(values.error_));
+            try {
+                as.argument(values.error_)
+            } catch (e) {
+                CHECK[`as.argument(values.error_) throw an error`](true);
+            }
+            CHECK['not nullish'](!is.nullish(values.error_));
+            try {
+                as.nullish(values.error_)
+            } catch (e) {
+                CHECK[`as.nullish(values.error_) throw an error`](true);
+            }
+            CHECK['not browser'](!is.browser());
+            try {
+                as.browser()
+            } catch (e) {
+                CHECK[`as.browser() throw an error`](true);
+            }
+
+        } else if (is.browser()) {
+            values.iterable.forEach((item) => CHECK[`not iterable`](!is.iterable(0)));
+            CHECK['not argument'](!is.argument(values.error_));
+            try {
+                as.argument(values.error_)
+            } catch (e) {
+                CHECK[`as.generator(values.error_) throw an error`](true);
+            }
+            CHECK['not nullish'](!is.nullish(values.error_));
+            try {
+                as.nullish(values.error_)
+            } catch (e) {
+                CHECK[`as.nullish(values.error_) throw an error`](true);
+            }
+            CHECK['not node'](!is.node());
+            try {
+                as.node()
+            } catch (e) {
+                CHECK[`as.node() throw an error`](true);
+            }
+        }
+    }
+    STOP.newValidatorsNegative;
+    START.if_else(138)
+    {
         function someFunction(name, age, friends,
-                              _= [as.stringNumberArray(name),
+                              _ = [as.stringNumberArray(name),
                                   as.undefinedNumberArray(age),
                                   as.undefinedArray(friends)
                               ]) {
-            IF.string(name) && is.number(age) && is.array(friends)? (
-                as.array(_) && as.notEmpty(_)
-            ):ELSE.string(name) && is.array(age)? (
+            IF.string(name) && is.number(age) && is.array(friends) ? (
+                as.array(_) && as.notEmpty(_) && as.true(_.length == 3)
+            ) : ELSE.string(name) && is.array(age) ? (
                 friends = age,
                     age = undefined
-            ):ELSE.number(name) && is.array(age)? (
+            ) : ELSE.number(name) && is.array(age) ? (
                 friends = age,
                     age = name,
                     name = undefined
-            ):ELSE.array(name)? (
+            ) : ELSE.array(name) ? (
                 friends = name,
                     name = undefined
-            ):END;
+            ) : END;
             return {name, age, friends};
         };
-        let { name, age, friends } = someFunction('Rick', 25, ['Mike', 'Liza']);
-        IS.true(name === 'Rick');
-        IS.true(age === 25);
-        IS.true(friends.includes('Mike'));
-        IS.true(friends.includes('Liza'));
-        ({ name, age, friends } = someFunction('Rick',['Mike', 'Liza']))
-        IS.true(name === 'Rick');
-        IS.undefined(age);
-        IS.true(friends.includes('Mike'));
-        IS.true(friends.includes('Liza'));
-        ({ name, age, friends } = someFunction(25, ['Mike', 'Liza']))
-        IS.undefined(name);
-        IS.true(age === 25);
-        IS.true(friends.includes('Mike'));
-        IS.true(friends.includes('Liza'));
-        ({ name, age, friends } = someFunction(['Mike', 'Liza']))
-        IS.undefined(name);
-        IS.undefined(age);
-        IS.true(friends.includes('Mike'));
-        IS.true(friends.includes('Liza'));
-    STOP.if_else
+        let {name, age, friends} = someFunction('Rick', 25, ['Mike', 'Liza']);
+        CHECK[`name === 'Rick'`](name === 'Rick');
+        CHECK['age === 25'](age === 25);
+        CHECK[`friends.includes('Mike')`](friends.includes('Mike'));
+        CHECK[`friends.includes('Liza')`](friends.includes('Liza'));
+        ({name, age, friends} = someFunction('Rick', ['Mike', 'Liza']))
+        CHECK[`name === 'Rick'`](name === 'Rick');
+        CHECK['is.undefined(age)'](is.undefined(age));
+        CHECK[`friends.includes('Mike')`](friends.includes('Mike'));
+        CHECK[`friends.includes('Liza')`](friends.includes('Liza'));
+        ({name, age, friends} = someFunction(25, ['Mike', 'Liza']))
+        CHECK['is.undefined(name)'](is.undefined(name));
+        CHECK['age === 25'](age === 25);
+        CHECK[`friends.includes('Mike')`](friends.includes('Mike'));
+        CHECK[`friends.includes('Liza')`](friends.includes('Liza'));
+        ({name, age, friends} = someFunction(['Mike', 'Liza']))
+        CHECK['is.undefined(name)'](is.undefined(name));
+        CHECK['is.undefined(age)'](is.undefined(age));
+        CHECK[`friends.includes('Mike')`](friends.includes('Mike'));
+        CHECK[`friends.includes('Liza')`](friends.includes('Liza'));
+    }
+    STOP.if_else;
+    START.primitivesPositive(182)
+    {
+        values.primitive_.forEach((type) => {
+            as[get.type(type)](type);
+            CHECK[get.type(type)](!!get.type(type));
+        });
+    }
+    STOP.primitivesPositive;
+    START.structuralPositive(190)
+    {
+        values.structural_.forEach((type) => {
+            as[get.type(type)](type);
+            CHECK[get.type(type)](!!get.type(type));
+        });
+    }
+    STOP.structuralPositive;
+    START.primitivesNegative(197)
+    {
+        values.primitive_.forEach((type) => {
+            CHECK[`it's not a(an) ${get.type(type)}`](!is[get.type(type)]({}));
+            try {
+                as[get.type(type)]({})
+            } catch (e) {
+                CHECK[`as.${get.type(type)}({}) throw an error`](true);
+            }
+        });
+    }
+    STOP.primitivesNegative;
+    START.structuralNegative(208)
+    {
+        values.structural_.forEach((type) => {
+            CHECK[`it's not a(an) ${get.type(type)}`](!is[get.type(type)](0));
+            try {
+                as[get.type(type)](0)
+            } catch (e) {
+                CHECK[`as.${get.type(type)}(0) throw an error`](true);
+            }
+        });
+    }
+    STOP.structuralNegative;
+    START.aliasPositive(219)
+    {
+        CHECK.optional(!optional.string());
+        CHECK.generator(is.generator(values.generator_));
+    }
+    STOP.aliasPositive;
+    START.aliasNegative(225)
+    {
+        CHECK[`not a generator`](!is.generator(values.string_));
+        try {
+            as.generator(0)
+        } catch (e) {
+            CHECK[`as.generator(0) throw an error`](true);
+        }
+    }
+    STOP.aliasNegative;
+    START.otherTypesPositive(235)
+    {
+        values.withLengthEmpty.forEach((type) => {
+            as.empty(type);
+            CHECK[`empty ${get.type(type)}`](is.empty(type));
+        });
+        values.withLengthNotEmpty.forEach((type) => {
+            as.notEmpty(type);
+            CHECK[`notEmpty ${get.type(type)}`](is.notEmpty(type));
+        });
+        IS.date(values.date_);
+        as.date(values.date_);
+        IS.null(values.null_);
+        as.null(values.null_);
+        IS.json(values.json_);
+        as.json(values.json_);
+        IS.json5(values.json5_);
+        as.json5(values.json5_);
+        IS.class(Checker);
+        as.class(Checker);
+    }
+    STOP.otherTypesPositive;
+    START.otherTypesNegative(257)
+    {
+        values.withLengthNotEmpty.forEach((type) => {
+            try {
+                as.empty(type)
+            } catch (e) {
+                CHECK[`as.empty(${type}) throw an error`](true);
+            }
+            CHECK[`empty ${get.type(type)}`](!is.empty(type));
+        });
+        values.withLengthEmpty.forEach((type) => {
+            try {
+                as.notEmpty(type)
+            } catch (e) {
+                CHECK[`as.notEmpty(${type}) throw an error`](true);
+            }
+            CHECK[`notEmpty ${get.type(type)}`](!is.notEmpty(type));
+        });
+        try {
+            as.date({})
+        } catch (e) {
+            CHECK[`as.date(${{}}) throw an error`](true);
+        }
+        CHECK[`not is.date${{}}`](!is.date({}));
+        try {
+            as.null({})
+        } catch (e) {
+            CHECK[`as.null(${{}}) throw an error`](true);
+        }
+        CHECK[`not is.json${{}}`](!is.json({}));
+        try {
+            as.json({})
+        } catch (e) {
+            CHECK[`as.json(${{}}) throw an error`](true);
+        }
+        CHECK[`not is.json${{}}`](!is.json({}));
+        try {
+            as.json5({})
+        } catch (e) {
+            CHECK[`as.json5(${{}}) throw an error`](true);
+        }
+        CHECK[`not is.json5${{}}`](!is.json5({}));
+        try {
+            as.class({})
+        } catch (e) {
+            CHECK[`as.class(${{}}) throw an error`](true);
+        }
+        CHECK[`not is.class${{}}`](!is.class({}));
+    }
+    STOP.otherTypesNegative;
+    START.repeatedTypePositive(307)
+    {
+        values.primitiveTypes.forEach((type) => values.primitive_.forEach((value) => {
+            if (type === get.type(value)) {
+                CHECK[`in object is.${type}s()`](is[`${type}s`]({prop1: value, prop2: value}));
+                CHECK[`in array is.${type}s()`](is[`${type}s`]([value, value, value]));
+                CHECK[`in set is.${type}s()`](is[`${type}s`](new Set([value, value, value])));
+                const mapValues = new Map();
+                mapValues.set('1', value);
+                mapValues.set('2', value);
+                mapValues.set('3', value);
+                CHECK[`in map is.${type}s()`](is[`${type}s`](mapValues));
+            }
+        }));
+    }
+    STOP.repeatedTypePositive;
+    // START.repeatedTypeNegative;
+    //     values.primitiveTypes.forEach((type)=> values.primitive_.forEach((value)=> {
+    //         if(type === get.type(value)){
+    //             try {
+    //                 CHECK[`not in object is.${type}s()`](!is[`${type}s`]({prop1: [], prop2: []}));
+    //                 CHECK[`not in array is.${type}s()`](!is[`${type}s`]([[], [], []]));
+    //                 CHECK[`not in set is.${type}s()`](!is[`${type}s`](new Set([{}, {}, {}])));
+    //                 CHECK[`not in map is.${type}s()`](!is[`${type}s`]({}));
+    //             } catch (e) {
+    //                 CHECK[`in object, array, set, map throw an error`](true);
+    //             }
+    //         }
+    //     }));
+    // STOP.repeatedTypeNegative;
+    START.multiTypePositive;
+    STOP.multiTypePositive;
+
+}
 FINISH.all;
+

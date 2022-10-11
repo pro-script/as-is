@@ -12,7 +12,7 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
 5. [API](#api)
     - [Basics](#basics)
     - [Basic Usage](#basic-usage)
-      - [String](#sstring--asstring)
+      - [String](#istring--asstring)
       - [Number](#isnumber--asnumber)
       - [Boolean](#isboolean--asboolean)
       - [Symbol](#issymbol--assymbol)
@@ -370,7 +370,7 @@ is.string(resultString)
         : console.log('this is '+ get.type(resultString));
 
 !is.string(two)
-        ? console.log('this is string')
+        ? console.log('this is not string')
         : console.log('this is '+ get.type(two));
  ```
 [<- go back](#please-read-the-pro-script-concept-first)
@@ -954,6 +954,12 @@ const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroT
 
 (1 < 2) ? passed.one('Is a won'): failed.two('is a loss');
 ```
+## Possible errors
+If you got this error:
+
+      TypeError: Cannot read properties of undefined (reading '#<Object>')
+
+Please check if you put a semicolon ';' at the end of line before.
 
 ## No dependencies except of json5 in vendor folder, pure javascript code. No selfish syntax, if you know javascript you can write code without any challenges.
 [<- go back](#please-read-the-pro-script-concept-first)

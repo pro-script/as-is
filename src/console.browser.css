@@ -1,0 +1,22 @@
+body {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: larger;
+    background-color: #202124;
+    padding: 120px;
+    color: white;
+}
+.info {
+    color: dodgerblue;
+    font-weight: bold;
+}
+.timeEnd {
+    color: gray;
+    font-weight: bold;
+}
+.log {
+    color: seagreen;
+}
+.error {
+    color:crimson;
+    font-weight: bold
+}

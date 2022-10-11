@@ -32,7 +32,7 @@ export const checker_ = new Checker();
 export const exampleObject = {};
 export const generator_ = function*() { yield 0; yield 1; };
 export const exampleString = 'example string';
-export const segment_ = (new Intl.Segmenter('en', { granularity: 'word' })).segment(exampleString);
+// export const segment_ = (new Intl.Segmenter('en', { granularity: 'word' })).segment(exampleString);
 new Array(10).fill(0).forEach((_, idx)=> Object.assign(exampleObject, {[`prop${idx}`]:string_}));
 export const exampleArray = [...Array(10).keys(10)]
 export const exampleSet = new Set(exampleArray);
@@ -41,10 +41,11 @@ Object.keys(exampleObject).forEach((item)=> exampleMap.set(item, exampleObject[i
 
 export const primitive_ = [string_, number_, boolean_, symbol_, function_, bigInt_];
 export const structural_ = [ array_, date_, object_, set_, map_, weakSet_, weakMap_, weakRef_,
-    regExp_, promise_, json_, json5_, error_, rangeError_, referenceError_, syntaxError_, typeError_,
+    regExp_, promise_, error_, rangeError_, referenceError_, syntaxError_, typeError_,
     checker_];
 export const numerousValues_ = primitive_.concat(structural_.slice(-1));
 export const numerousTypes_ = primitiveTypes.concat(structuralTypes);
 export const withLengthEmpty = [string_, array_, object_, set_, map_];
-export const iterable = [string_, array_, set_, map_, segment_, object_, symbol_];
+export const iterable = [string_, array_, set_, map_, object_, symbol_];
 export const withLengthNotEmpty = ['string_', exampleArray, exampleObject, exampleSet, exampleMap];
+export { primitiveTypes };
