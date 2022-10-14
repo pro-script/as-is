@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.js",
   "type": "module",
@@ -13,8 +13,7 @@
   },
   "scripts": {
     "test": "node tests/pro-script.test.js",
-    "test:mocha": "mocha tests/as-is.class.test.js",
-    "test:browser": "npx browser-sync --start --no-online"
+    "test:browser": "npx browser-sync --start --no-online "
   },
   "keywords": [
     "as-is",
@@ -70,12 +69,9 @@
     "is-empty",
     "is-notEmpty"
   ],
-  "author": "Kotowolod <kotowolod@gmail.com>",
+  "author": "Volodymyr Kotov (aka Kotowolod) <kotowolod@gmail.com> UKRAINE",
   "license": "MIT",
-  "devDependencies": {
-    "chai": "^4.3.4",
-    "mocha": "^9.1.3"
-  },
+  "devDependencies": {},
   "files": [
     "*.js",
     "index.html",
@@ -94,8 +90,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pro-script/as-is.git"
-  },
-  "dependencies": {
-    "@pro-script/as-is": "^0.9.34"
   }
 }

@@ -4,30 +4,54 @@ import {
     structural_,
     withLengthEmpty,
     withLengthNotEmpty
-} from "./values.js";
+} from './values.js';
 
-const modules = await import('../index.js');
+// const modules = await import('../index.js');
+await import('../src/as-is.browser.min.js');
 import MacroInitialization from './macro.js';
 import MacroInstance from './macroTests/instance.macro.test.js';
 import MacroValues from './macroTests/values.macro.test.js';
 
-const { Checker, BaseInterface, Enum, MicroTest, Utility } =  modules;
+const { Checker, BaseInterface, Enum, MicroTest, Utility, primitiveTypes, structuralTypes, otherTypes, aliasTypes } =  window;
 const checker = new Checker();
-const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get, macro }  = checker;
+const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
 import * as values_ from './values.js';
-import primitiveTypes from "../lib/types/primitiveTypes.js";
 const values = Object.assign({}, values_);
-const m = Utility.macro;
+
+const types = [...primitiveTypes,...structuralTypes,...otherTypes.map(_=>_.alias),...aliasTypes.map(_=>_.alias)];
+
+const examples = [...values.primitive_, ...values.structural_];
+
+const enumExample = Enum.init({
+    [Enum.step]: 1,
+    Monday: 1,
+    Tuesday: Enum.inc,
+    Wednesday: Enum.dec,
+    Thursday: Enum.inc,
+    Friday: Enum.dec,
+    Saturday: 'day off',
+    Sunday: 'super day off'
+});
+
+as.Objects([{}, {}]);
 
 is.node() && (
     values.buffer_ = new Buffer.alloc(5),
     values.structural_.push(values.buffer_)
 );
 
+let { IUser } = Interface({
+    IUser: {
+        name: as.string,
+        birthDate: as.date
+    }
+});
+
+
 START.all
 {
-    START.macro(30)
+    START.macro
     {
         [MacroInitialization].macro;
         const results = [
@@ -40,15 +64,15 @@ START.all
         CHECK.RESULTS0(results[0] === 'macro value');
         CHECK.RESULTS1(results[1] === 2);
     }
-    STOP.macro;
-    START.getType(44)
+    STOP.macro
+    START.getType
     {
         CHECK['get.type'](!!get.type())
         values.primitive_.forEach((type) => CHECK[get.type(type)](!!get.type(type)));
         values.structural_.forEach((type) => CHECK[get.type(type)](!!get.type(type)));
     }
-    STOP.getType;
-    START.Instance(51)
+    STOP.getType
+    START.Instance
     {
         [MacroInstance].macro;
         [
@@ -57,8 +81,8 @@ START.all
             'check.methods'
         ].macro;
     }
-    STOP.Instance;
-    START.CheckMethods(61)
+    STOP.Instance
+    START.CheckMethods
     {
         ['alias', 'CheckPlatform', 'iterator', 'nullish', 'bun', 'browser', 'browserFromList', 'node', 'any',
             'multiCheck', 'multiType', 'defineMethod', 'duplicateError', 'numerous', 'primitive', 'array', 'json',
@@ -66,13 +90,13 @@ START.all
             .forEach((methodName) => METHOD[methodName](Checker));
         IS.class(BaseInterface);
     }
-    STOP.CheckMethods;
-    START.CheckValues(70)
+    STOP.CheckMethods
+    START.CheckValues
     {    [MacroValues].macro;
         [_ => check.values].macro;
     }
-    STOP.CheckValues;
-    START.newValidatorsPositive(75)
+    STOP.CheckValues
+    START.newValidatorsPositive
     {
         if (is.node() || is.bun()) {
             IS.undefined(values.iterable.forEach((item) => CHECK.iterable(is.iterable(item))))
@@ -88,8 +112,8 @@ START.all
             IS.Navigator(is.browser() && as.browser())
         }
     }
-    STOP.newValidatorsPositive;
-    START.newValidatorsNegative(92)
+    STOP.newValidatorsPositive
+    START.newValidatorsNegative
     {
         if (is.node() || is.bun()) {
             values.iterable.forEach((item) => CHECK[`not iterable`](!is.iterable(0)));
@@ -134,8 +158,8 @@ START.all
             }
         }
     }
-    STOP.newValidatorsNegative;
-    START.if_else(138)
+    STOP.newValidatorsNegative
+    START.if_else
     {
         function someFunction(name, age, friends,
                               _ = [as.stringNumberArray(name),
@@ -179,23 +203,23 @@ START.all
         CHECK[`friends.includes('Liza')`](friends.includes('Liza'));
     }
     STOP.if_else;
-    START.primitivesPositive(182)
+    START.primitivesPositive
     {
         values.primitive_.forEach((type) => {
             as[get.type(type)](type);
             CHECK[get.type(type)](!!get.type(type));
         });
     }
-    STOP.primitivesPositive;
-    START.structuralPositive(190)
+    STOP.primitivesPositive
+    START.structuralPositive
     {
         values.structural_.forEach((type) => {
             as[get.type(type)](type);
             CHECK[get.type(type)](!!get.type(type));
         });
     }
-    STOP.structuralPositive;
-    START.primitivesNegative(197)
+    STOP.structuralPositive
+    START.primitivesNegative
     {
         values.primitive_.forEach((type) => {
             CHECK[`it's not a(an) ${get.type(type)}`](!is[get.type(type)]({}));
@@ -206,8 +230,8 @@ START.all
             }
         });
     }
-    STOP.primitivesNegative;
-    START.structuralNegative(208)
+    STOP.primitivesNegative
+    START.structuralNegative
     {
         values.structural_.forEach((type) => {
             CHECK[`it's not a(an) ${get.type(type)}`](!is[get.type(type)](0));
@@ -218,14 +242,14 @@ START.all
             }
         });
     }
-    STOP.structuralNegative;
-    START.aliasPositive(219)
+    STOP.structuralNegative
+    START.aliasPositive
     {
         CHECK.optional(!optional.string());
         CHECK.generator(is.generator(values.generator_));
     }
-    STOP.aliasPositive;
-    START.aliasNegative(225)
+    STOP.aliasPositive
+    START.aliasNegative
     {
         CHECK[`not a generator`](!is.generator(values.string_));
         try {
@@ -234,8 +258,8 @@ START.all
             CHECK[`as.generator(0) throw an error`](true);
         }
     }
-    STOP.aliasNegative;
-    START.otherTypesPositive(235)
+    STOP.aliasNegative
+    START.otherTypesPositive
     {
         values.withLengthEmpty.forEach((type) => {
             as.empty(type);
@@ -256,8 +280,8 @@ START.all
         IS.class(Checker);
         as.class(Checker);
     }
-    STOP.otherTypesPositive;
-    START.otherTypesNegative(257)
+    STOP.otherTypesPositive
+    START.otherTypesNegative
     {
         values.withLengthNotEmpty.forEach((type) => {
             try {
@@ -306,8 +330,8 @@ START.all
         }
         CHECK[`not is.class${{}}`](!is.class({}));
     }
-    STOP.otherTypesNegative;
-    START.repeatedTypePositive(307)
+    STOP.otherTypesNegative
+    START.numerousTypePositive
     {
         values.primitiveTypes.forEach((type) => values.primitive_.forEach((value) => {
             if (type === get.type(value)) {
@@ -322,24 +346,81 @@ START.all
             }
         }));
     }
-    STOP.repeatedTypePositive;
-    // START.repeatedTypeNegative;
-    //     values.primitiveTypes.forEach((type)=> values.primitive_.forEach((value)=> {
-    //         if(type === get.type(value)){
-    //             try {
-    //                 CHECK[`not in object is.${type}s()`](!is[`${type}s`]({prop1: [], prop2: []}));
-    //                 CHECK[`not in array is.${type}s()`](!is[`${type}s`]([[], [], []]));
-    //                 CHECK[`not in set is.${type}s()`](!is[`${type}s`](new Set([{}, {}, {}])));
-    //                 CHECK[`not in map is.${type}s()`](!is[`${type}s`]({}));
-    //             } catch (e) {
-    //                 CHECK[`in object, array, set, map throw an error`](true);
-    //             }
-    //         }
-    //     }));
-    // STOP.repeatedTypeNegative;
-    START.multiTypePositive;
-    STOP.multiTypePositive;
-
-}
-FINISH.all;
-
+    STOP.numerousTypePositive
+    START.numerousTypeNegative;
+        values.primitiveTypes.forEach((type)=> values.primitive_.forEach((value)=> {
+            if(type === get.type(value)){
+                try {
+                    CHECK[`not in object is.${type}s()`](!is[`${type}s`]({prop1: [], prop2: []}));
+                    CHECK[`not in array is.${type}s()`](!is[`${type}s`]([[], [], []]));
+                    CHECK[`not in set is.${type}s()`](!is[`${type}s`](new Set([{}, {}, {}])));
+                    CHECK[`not in map is.${type}s()`](!is[`${type}s`]({}));
+                } catch (e) {
+                    CHECK[`in object, array, set, map throw an error`](true);
+                }
+            }
+        }));
+    STOP.numerousTypeNegative;
+    START.multiTypePositive
+    {
+        examples.forEach((value)=> IS[types.join('').replaceAll(',','')](value));
+    }
+    STOP.multiTypePositive
+    START.multiTypeNegative
+    {
+        const primitives = primitiveTypes.join('').replaceAll(',','');
+        const structurals = structuralTypes.join('').replaceAll(',','');
+        const otherTypesCollection = otherTypes.map(_=>_.alias);
+        const aliasTypesCollection = aliasTypes.map(_=>_.alias);
+        try {
+            as[primitives]({});
+        } catch (e) {
+            CHECK[`as.${primitives}({}) throw an error`](true);
+        }
+        try {
+            as[structurals](0);
+        } catch (e) {
+            CHECK[`as.${structurals}(${0}) throw an error`](true);
+        }
+        try {
+            as[otherTypesCollection](0);
+        } catch (e) {
+            CHECK[`as.${otherTypesCollection}(${0}) throw an error`](true);
+        }
+        try {
+            as[aliasTypesCollection](0);
+        } catch (e) {
+            CHECK[`as.${aliasTypesCollection}(${0}) throw an error`](true);
+        }
+    }
+    STOP.multiTypeNegative
+    START.EnumPositive
+    {
+        IS.Enum(enumExample);
+    }
+    STOP.EnumPositive
+    START.EnumNegative
+    {
+        try {
+            as.Enum({})
+        } catch (e) {
+            CHECK[`as.Enum(${{}}) throw an error`](true);
+        }
+    }
+    STOP.EnumNegative
+    START.InterfacePositive
+    {
+        IS.object(IUser = { name: 'string', birthDate: new Date()});
+        IS.object(as.IUser = { name: 'string', birthDate: new Date()});
+    }
+    STOP.InterfacePositive
+    START.InterfaceNegative
+    {
+        try {
+            as.IUser = { name: 0, birthDate: new Date()}
+        } catch (e) {
+            CHECK[`as.IUser(${{}}) throw an error`](true);
+        }
+    }
+    STOP.InterfaceNegative
+} FINISH.all;

@@ -616,4 +616,4 @@ const primitiveTypes = pt;
 const structuralTypes = st;
 const otherTypes = ot;
 const aliasTypes = ot;
-Object.assign(window, { Checker, BaseInterface, Enum, JSON5, MicroTest, primitiveTypes, structuralTypes, otherTypes, aliasTypes });
+export { Checker, BaseInterface, Enum, JSON5, MicroTest, primitiveTypes, structuralTypes, otherTypes, aliasTypes };

@@ -14,7 +14,6 @@ export default {
         IS.Checker(instance);
         METHOD.multi(instance);
         METHOD.Interface(instance);
-        PROPERTY.strict(instance);
         PROPERTY.get(instance);
     }
 }

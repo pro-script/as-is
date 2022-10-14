@@ -1,4 +1,3 @@
-import {Checker} from '../lib/as-is.class.js';
 import primitiveTypes from '../lib/types/primitiveTypes.js';
 import structuralTypes from '../lib/types/structuralTypes.js';
 
@@ -27,7 +26,7 @@ export const rangeError_ = new RangeError('this is RangeError');
 export const referenceError_ = new ReferenceError('this is ReferenceError');
 export const syntaxError_ = new SyntaxError('this is SyntaxError');
 export const typeError_ = new TypeError('this is TypeError');
-export const checker_ = new Checker();
+export const checker_ = new class Checker{};
 
 export const exampleObject = {};
 export const generator_ = function*() { yield 0; yield 1; };

@@ -47,9 +47,6 @@ Follow me on twitter for further updates [twitter](https://twitter.com/Volodymyr
       - [TypeError](#istypeerror--astypeerror)
       - [Any](#isany--asany)
     - [Checking one repeated type](#checking-one-repeated-type)
-    - [Strict typing](#strict-typing)
-        - [Strict typing basics](#strict-typing-basics)
-        - [Strict typing basic usage](#strict-typing-basic-usage)
     - [Checking multiple types](#checking-multiple-types)
         - [Multiple Basic](#multiple-basic)
         - [Multiple Basic usage](#multiple-basic-usage)
@@ -435,49 +432,7 @@ is.BigInts(exampleMap) && as.BigInts(exampleMap);
 is.BigInts(exampleMap) && optional.BigInts(exampleMap); 
 ```
 [<- go back](#please-read-the-pro-script-concept-first)
-## Strict typing
-### Strict typing basics
-```js
-strict['js type here']`variable name`;// <-- meta programing magic
-```
-```js
-strict.string`name`;
-strict.name = 'Stephen Hawking';
-```
-[<- go back](#please-read-the-pro-script-concept-first)
-### Strict typing basic usage
-```js
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
-const { multi, strict, as, is } = new Checker();
-strict.string`name`.name = 'Mike';
-strict.number`age`;
-strict.strings`pages`;
 
-const $ = strict; // you can use alias for strict object
-
-$.age = 12;
-$.pages = ['pageOne', 'pageTwo'];
-$.bla = 1; // will not be assigned
-
-let { name, age, pages } = strict; // after that name, age and pages loose their strict behavior
-
-name = 2022
-console.log(name, age, pages );
-// 2022 12 [ 'pageOne', 'pageTwo' ]
-
-$.name = 2022; // but strict.name still has it
-// TypeError: Number is not a(an) string
-```
-
-**Strict has reserved variable names:** get, set, variable, lastType. This means that you can't do the following;
-```js
-strict.null`get`;
-//or
-strict.undefined`set`;
-//or
-strict.object`variables`;
-```
-[<- go back](#please-read-the-pro-script-concept-first)
 ## Checking multiple types
 When a variable is part of more than one type, you can also check for that. 
 ### Multiple Basic
@@ -853,7 +808,7 @@ checker.disabled = true;
 # Micro-tests
 A micro-test is better than no tests.
 ## Micro-tests Basic
-Micro-test has two syntaxs. You can choose what you like.
+Micro-test has couple variant of syntax. You can choose what you like.
 ```javascript
 START.anyName;
     START.anyName;
@@ -861,11 +816,30 @@ START.anyName;
     STOP.anyName;
 FINISH.anyName;
 // or
-START.anyName {
-    START.anyName {
+START.anyName 
+{
+    START.anyName 
+   {
         // your test here
-    } STOP.anyName
-} FINISH.anyName
+    } 
+    STOP.anyName
+} 
+FINISH.anyName;
+// or
+[{
+   [START.anyName]() {
+      // your test here
+      STOP.anyName;
+   },   
+   [START.anyName2]() {
+      // your test here
+      STOP.anyName;
+   },
+   
+}, /anyName/, /anyName2/].macro;
+// or 
+[{/* just init like before */}].macro;
+[/anyName/, /anyName2/].macro; // launch the test macros;
 ```
 Under the hood START.anyName is the 
 
