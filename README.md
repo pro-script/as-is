@@ -1,4 +1,4 @@
-# @pro-script/as-is v0.9.4 RC3
+# @pro-script/as-is v0.9.8 RC4
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 
@@ -225,8 +225,7 @@ const { IUser } = Interface({
                 birthDate: as.date
             }
 });
-IUser.pages = as.strings;
-delete IUser.birthDate;
+as.IUser = { name: 'Jesus', age: 2022, birthDate: 'Sat Apr 7 0:0:0 GMT+0200 (Central European Summer Time)'};
 
 function example(name, age,  _ = as.IUser = { name, age }) {
             console.log(name, age);
@@ -255,14 +254,20 @@ npm i @pro-script/as-is
 ```
 **Browsers**
 ```html
-<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/src/as-is.browser.min.js"></script>
+<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/dist/as-is.browser.js"></script>
 // or es module
-<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/src/as-is.esModule.min.js"></script>
+<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/dist/as-is.esm.mjs"></script>
 
+```
+**Node JS**
+```javascript
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
+//or
+const { Checker, BaseInterface, MicroTest, Utility } = require('@pro-script/as-is');
 ```
 [<- go back](#please-read-the-pro-script-concept-first)
 # API
-**Checker-as-is** is a stateful module please keep this in mind.
+**as-is** is a stateful module please keep this in mind.
 
 [<- go back](#please-read-the-pro-script-concept-first)
 ## Basics
@@ -273,8 +278,10 @@ optional['js type here' + 'Undefined' + 'Null']('argument here') // argument | T
 ```
 An example
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
-const { multi, strict, as, is, optional } = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
+const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum } = new Checker({ 
+   'IF/ELSE/END': true, strict: true, Enum: true, utility: true
+});
 
 
 //positive
@@ -291,8 +298,10 @@ optional.number('example string'); // TypeError: String is not a(an) number
 [<- go back](#please-read-the-pro-script-concept-first)
 ## Basic Usage
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
-const { multi, strict, as, is, optional }  = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
+const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = new Checker({
+   'IF/ELSE/END': true, strict: true, Enum: true, utility: true
+});
 
 function example(arg, arg2, arg3) {
     as.string(arg);
@@ -314,8 +323,10 @@ console.log(result);
 ```
 or next syntax
 ```js 
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
-const { multi, strict, as, is, optional }  = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
+const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = new Checker({
+   'IF/ELSE/END': true, strict: true, Enum: true, utility: true
+});
 
 function example(arg, arg2, arg3) {
     as.string(arg), as.number(arg2), as.boolean(arg3);
@@ -327,8 +338,10 @@ example(text, 2, true)
 ```
 or more extraordinary syntax
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
-const { multi, strict, as, is, optional }  = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
+const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = new Checker({ 
+   'IF/ELSE/END': true, strict: true, Enum: true, utility: true
+});
 
 function example(arg, arg2, arg3,
                        _ = [as.string(arg), as.number(arg2), as.boolean(arg3)]) {
@@ -376,39 +389,16 @@ is.string(resultString)
 **Working examples**
 ```javascript
 is.string('text') // -> true
-is.String('text') // -> true
-is.sTrInG('text') // -> true. Allways type will be converted to lowercase
-is.string(2) // -> false
+as.number(2) // -> 2
+
 ```
-```javascript
-as.string('text') // -> 'text'
-as.String('text') // -> 'text'
-as.sTrInG('text') // -> 'text'. Allways type will be converted to lowercase
-as.string(2) // -> TypeError: Number is not a(an) string
-```
-```javascript
-const hello = 'Hello';
-const world = 'world';
-const two = 2;
-
-const resultString = as.string(hello) + as.string(world); // -> Hello world
-console.log(as.string(resultString)); // type checked and returned -> Hello world
-
-is.string(resultString)
-        ? console.log('this is string')
-        : console.log('this is '+ get.type(resultString));
-
-!is.string(two)
-        ? console.log('this is string')
-        : console.log('this is '+ get.type(two));
- ```
 [<- go back](#please-read-the-pro-script-concept-first)
 
 
 ### You can even check the class type
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
-const instance = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
+const instance = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 
 is.Checker(Checker); // true
 as.Checker(Checker);// class Checker
@@ -467,8 +457,8 @@ as[multiType]({});
 ## Interfaces Basic
 First you need create an interface, which will be stored in instance of checker in private area **#interfaces**.
 ```js
-const checker = new Checker();
-const { multi, Interface, strict, as, is } = checker;
+const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true });
+const { multi, Interface, as, is } = checker;
 
 const { [InterfaceName] } = Interface({
     [InterfaceName]: {
@@ -479,7 +469,7 @@ const { [InterfaceName] } = Interface({
 ```
 Working example
 ```js
-const { Interface, as } = new Checker();
+const { Interface, as } = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true });
 
 const { IUser } = Interface({
     IUser: {
@@ -487,23 +477,20 @@ const { IUser } = Interface({
     }
 });
 ```
-When the interface is ready, you can change it.
+You can't change the interface.
 ```js
-IUser.pages = as.strings;
-IUser.birthDate = as.number;
-delete IUser.birthDate;
+IUser.pages = as.strings; // error
+IUser.birthDate = as.number; // error
+delete IUser.birthDate; // error
 ```
-The method Interface receives an object of objects, where the properties are a reference to Checker-as-is type checking methods.
+The method Interface receives an object of objects, where the properties are a reference to as-is type checking methods.
 You can use **BaseInterface** to create an interface object after instantiation. This gives you the ability to work with interfaces like classes.
 ```js
-// MyInterface.interface.js
-
 export default class MyInterface extends BaseInterface {
-
-    age = ()=> as.number;
     
     constructor() {
         super(MyInterface);
+        this.age = ()=> as.number;
     }
 
     name() {
@@ -763,7 +750,7 @@ as.Enum(enumExample) && as.enum(enumExample);
 ## Integration
 You can integrate any feature you want.
 ```js
-import { Checker, BaseInterface, Enum, JSON5 } from '@pro-script/as-is';
+import { Checker, BaseInterface, MicroTest, Utility } from '@pro-script/as-is';
 import axios from "axios";
 
 const integrate = {
@@ -800,7 +787,7 @@ checker.errorMsg = (params)=> `${params[2] || (params[0]?.constructor
                                    :params[0])
                            } , really? I'm not sure that is a(an) ${params[1]}`;
 
-const { multi, strict, as, is } = checker;
+const { multi, as, is } = checker;
 checker.disabled = true;
 // TypeError: Number, really? I'm not sure that is a(an) string
 ```
@@ -834,8 +821,7 @@ FINISH.anyName;
    [START.anyName2]() {
       // your test here
       STOP.anyName;
-   },
-   
+   }
 }, /anyName/, /anyName2/].macro;
 // or 
 [{/* just init like before */}].macro;
@@ -858,8 +844,8 @@ There are only five main methods: METHOD, PROPERTY, IS, passed and failed.
 ## METHOD usage
 METHOD strictly checks methods.
 ```javascript
-import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
-const checker = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility, MicroTest } from '@pro-script/as-is';
+const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
 
@@ -873,8 +859,8 @@ METHOD.foo(object) // ✓ METHOD.foo passed
 ## PROPERTY usage
 PROPERTY strictly checks properties.
 ```javascript
-import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
-const checker = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility, MicroTest } from '@pro-script/as-is';
+const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
 
@@ -889,8 +875,8 @@ PROPERTY.property1(object) // ✓ PROPERTY.property1 passed
 ## IS usage
 The IS function is a wrapper of "is" method, but with four additional methods like: true, false, ok, notOk. You can check any type with IS, what can do "is".
 ```javascript
-import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
-const checker = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility, MicroTest } from '@pro-script/as-is';
+const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
 
@@ -900,8 +886,8 @@ IS.objectUndeinedStringNumber(2); // ✓ IS.objectUndeinedStringNumber passed
 Any testing framework has many methods and you should learn them before testing. Such as ().to.be.equal or assert.isOk() and more and that means a test development takes more time.
 Using the one percent improvement principle, you can reduce this time to a minimum by using only IS.true or IS.false and IS.ok or IS.notOk. Nothing else is needed for microtesting. When you need to test anything, you will use a different testing framework.
 ```javascript
-import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
-const checker = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility, MicroTest } from '@pro-script/as-is';
+const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
 
@@ -921,8 +907,8 @@ IS.notOk(object.foo().includes('!'));
 ## passed and failed usage
 This small functionality will be useful when you need to build your own testing scenario, but don't want to use IS for checking.
 ```javascript
-import { Checker, BaseInterface, Enum, JSON5, MicroTest } from '@pro-script/as-is';
-const checker = new Checker();
+import { Checker, BaseInterface, MicroTest, Utility, MicroTest } from '@pro-script/as-is';
+const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 const { multi, Interface, strict, as, is, IF, ELSE, END, optional, get }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, passed, failed } = new MicroTest({ is, as });
 

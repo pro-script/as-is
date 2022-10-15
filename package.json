@@ -1,9 +1,16 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/as-is.common.js",
+      "module": "./dist/as-is.esm.mjs",
+      "browser": "./as-is.browser.js",
+      "default": "./index.mjs"
+    }
+  },
   "engines": {
     "node": ">=14.18.3"
   },
@@ -12,8 +19,13 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/pro-script.test.js",
-    "test:browser": "npx browser-sync --start --no-online "
+    "test": "node tests/pro-script.test.mjs",
+    "test:esm": "export NODE_ENV=esm && node tests/pro-script.test.mjs",
+    "test:browser": "npx browser-sync --start --no-online ",
+    "build": "node build.mjs",
+    "build:esm": "export NODE_ENV=esm && node build.mjs",
+    "build:common": "export NODE_ENV=common && node build.mjs",
+    "build:browser": "export NODE_ENV=browser && node build.mjs"
   },
   "keywords": [
     "as-is",
@@ -77,9 +89,12 @@
     "index.html",
     "/lib/*.js",
     "/tests/*.js",
+    "/tests/macroTests/*.js",
     "/vendor/*.js",
-    "/src/*.js",
+    "/public/*.*",
+    "/dist/*.*",
     "/lib/types/*.js",
+    "/lib/classes/*.js",
     "README.md",
     "LICENSE"
   ],
