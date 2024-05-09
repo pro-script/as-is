@@ -1,23 +1,20 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.8",
+  "version": "0.9.83",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.mjs",
   "exports": {
     ".": {
       "require": "./dist/as-is.common.js",
       "module": "./dist/as-is.esm.mjs",
-      "browser": "./as-is.browser.js",
+      "browser": "./dist/as-is.browser.js",
       "default": "./index.mjs"
     }
   },
   "engines": {
     "node": ">=14.18.3"
   },
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
+  "directories": {},
   "scripts": {
     "test": "node tests/pro-script.test.mjs",
     "test:esm": "export NODE_ENV=esm && node tests/pro-script.test.mjs",
@@ -83,18 +80,17 @@
   ],
   "author": "Volodymyr Kotov (aka Kotowolod) <kotowolod@gmail.com> UKRAINE",
   "license": "MIT",
-  "devDependencies": {},
   "files": [
-    "*.js",
+    "*.mjs",
     "index.html",
-    "/lib/*.js",
-    "/tests/*.js",
-    "/tests/macroTests/*.js",
-    "/vendor/*.js",
+    "/lib/*.*",
+    "/tests/*.*",
+    "/tests/macroTests/*.*",
+    "/vendor/*.*",
     "/public/*.*",
     "/dist/*.*",
-    "/lib/types/*.js",
-    "/lib/classes/*.js",
+    "/lib/types/*.*",
+    "/lib/classes/*.*",
     "README.md",
     "LICENSE"
   ],
@@ -105,5 +101,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pro-script/as-is.git"
+  },
+  "dependencies": {
+    "@pro-script/as-is": "^0.9.82"
   }
 }

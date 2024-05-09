@@ -1,11 +1,11 @@
-# @pro-script/as-is v0.9.8 RC4
+# @pro-script/as-is v0.9.8 RC5
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 
 Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object, enum type and more.
 Follow me on twitter for further updates [twitter](https://twitter.com/VolodymyrKotov)
 All code covered by 282 tests in node js and 233 in browser. 
-Tested in **node js, Chrome, Safary, FireFox**
+Tested in **node js, bun.js, Chrome, Safary, FireFox**
 
 1. [The principle of readable code](#the-principle-of-readable-code)
 2. [The main idea is to use proxies instead of functions](#the-main-idea-is-to-use-proxies-instead-of-functions)
@@ -225,7 +225,7 @@ npm i @pro-script/as-is
 ```
 **Browsers**
 ```html
-<script type="module" src="https://unpkg.com/@pro-script/as-is@latest/dist/as-is.browser.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@pro-script/as-is@latest/dist/as-is.browser.js"></script>
 // or es module
 <script type="module" src="https://unpkg.com/@pro-script/as-is@latest/dist/as-is.esm.mjs"></script>
 
