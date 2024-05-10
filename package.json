@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.83",
+  "version": "0.9.84",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.mjs",
   "exports": {

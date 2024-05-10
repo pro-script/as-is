@@ -1,4 +1,4 @@
-# @pro-script/as-is v0.9.8 RC5
+# @pro-script/as-is v0.9.8 RC6
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 
@@ -42,14 +42,14 @@ Tested in **node js, bun.js, Chrome, Safary, FireFox**
     
 
 ## The principle of readable code
-This library respects the principle of code readability. The code should tell a story. See [details](https://github.com/pro-script/The-concept#the-principle-of-readable-code)
+This library respects the principle of the code readability. The code should tell a story. See [details](https://github.com/pro-script/The-concept#the-principle-of-readable-code)
 
     I.want.to.tell.you.a.story(myStory)
 
 [<- go back](#please-read-the-pro-script-concept-first)
 
 ## The main idea is to use proxies instead of functions
-In traditional way we use functions to do the call
+In traditional way we are using functions to do the call
 ```javascript
 as(type, value) 
 // or 
@@ -59,7 +59,7 @@ But that means you have to use a quoted string when you need to make a call
 ```javascript
 is('string', stringVariable);
 ```
-In the ECMAscript specification, object.property is always a string like this object['property']. So why can't we use this great standard feature to reduce quotas?
+In the ECMAscript specification, object.property is always a string like this object['property']. So why we can't use this a great standard feature to reduce quotas?
 We can use this feature and make our calls without quotas like as.string(value). But for this functionality, we need to implement specific methods in an object or class.
 ```javascript
 const is = {
@@ -81,7 +81,7 @@ as.string(value) ;
 
 is.string(value);
 ```
-But remember that this is the same function call is(type, value) and you can always create an alias if you need to use it like in the old days.
+But remember that this is the same function call is(type, value) and you can always create an alias if you need to use it like in old days.
 ```javascript
 function is(type, value) {
     return is[type](value)
