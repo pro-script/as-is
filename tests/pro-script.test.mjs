@@ -47,7 +47,8 @@ is.node() && (
 let { IUser } = Interface({
     IUser: {
         name: as.string,
-        birthDate: as.date
+        birthDate: as.date,
+        prop: multi`nullStringNumberUndefined`
     }
 });
 
@@ -422,6 +423,8 @@ START.all
     {
         IS.object(IUser = { name: 'string', birthDate: new Date()});
         IS.object(as.IUser = { name: 'string', birthDate: new Date()});
+        IS.object(as.IUser = { name: 'string', birthDate: new Date(), prop: undefined});
+        IS.object(as.IUser = { name: 'string', birthDate: new Date(), prop: null});
     }
     STOP.InterfacePositive
     START.InterfaceNegative

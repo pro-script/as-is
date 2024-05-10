@@ -1,4 +1,4 @@
-# @pro-script/as-is v0.9.8 RC6
+# @pro-script/as-is v0.9.8 RC7
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 
