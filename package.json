@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "0.9.88",
+  "version": "1.0.0",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.mjs",
   "exports": {
@@ -101,8 +101,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pro-script/as-is.git"
-  },
-  "dependencies": {
-    "@pro-script/as-is": "^0.9.82"
   }
 }

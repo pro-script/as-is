@@ -1,6 +1,8 @@
-# @pro-script/as-is v0.9.8 RC7
+# @pro-script/as-is v1.0.0
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
+### Please read use cases 1 [@pro-script/as-is is a game changing library. Use cases 1](https://www.linkedin.com/pulse/pro-scriptas-is-game-changing-library-use-cases-1-volodymyr-kotov-nuuwe/)
+### Please read use cases 2 [@pro-script/as-is is a game changing library. Use cases 2](https://www.linkedin.com/pulse/pro-scriptas-is-game-changing-library-use-cases-2-volodymyr-kotov-eyuke/)
 
 Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object, enum type and more.
 Follow me on twitter for further updates [twitter](https://twitter.com/VolodymyrKotov)
@@ -892,5 +894,5 @@ If you got this error:
 
 Please check if you put a semicolon ';' at the end of line before.
 
-## No dependencies except of json5 in vendor folder, pure javascript code. No selfish syntax, if you know javascript you can write code without any challenges.
+## No dependencies
 [<- go back](#please-read-the-pro-script-concept-first)
