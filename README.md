@@ -1,4 +1,4 @@
-# @pro-script/as-is v1.0.0
+# @pro-script/as-is v1.0.1
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 ### Please read use cases 1 [@pro-script/as-is is a game changing library. Use cases 1](https://www.linkedin.com/pulse/pro-scriptas-is-game-changing-library-use-cases-1-volodymyr-kotov-nuuwe/)
@@ -734,7 +734,7 @@ const integrate = {
     }
 };
 
-const { multi, strict, as, is } = new Checker(integrate);
+const { multi, strict, as, is } = new Checker({ integrate });
 const isUrl = as;
 
 async function example(arg, arg2, arg3,
