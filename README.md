@@ -1,4 +1,4 @@
-# @pro-script/as-is v1.1.1
+# @pro-script/as-is v1.1.2
 
 ## Please read the [pro-script](https://github.com/pro-script/The-concept) concept first.
 ### Please read use cases 1 [@pro-script/as-is is a game changing library. Use cases 1](https://www.linkedin.com/pulse/pro-scriptas-is-game-changing-library-use-cases-1-volodymyr-kotov-nuuwe/)
