@@ -1,4 +1,4 @@
-import { date_, generator_, structural_, withLengthEmpty, withLengthNotEmpty } from './values.mjs';
+import { date_, generator_, structural_, withLengthEmpty, withLengthNotEmpty } from './values.js';
 
 let filePath, env;
 try { env = process?.env?.NODE_ENV } catch (e){ env = 'esm' }
@@ -6,22 +6,22 @@ try { env = process?.env?.NODE_ENV } catch (e){ env = 'esm' }
 switch(env){
     case 'esm': filePath = '../dist/as-is.esm.mjs';
         break;
-    case 'browser': filePath = '../dist/as-is.browser.mjs';
+    case 'browser': filePath = '../dist/as-is.browser.js';
         break;
     default:
-        filePath = '../index.mjs';
+        filePath = '../index.js';
 }
 const modules = await import(filePath);
-import MacroInitialization from './macro.mjs';
-import MacroInstance from './macroTests/instance.macro.test.mjs';
-import MacroValues from './macroTests/values.macro.test.mjs';
+import MacroInitialization from './macro.js';
+import MacroInstance from './macroTests/instance.macro.test.js';
+import MacroValues from './macroTests/values.macro.test.js';
 
 const { Checker, BaseInterface, MicroTest, Utility, primitiveTypes, structuralTypes,
     otherTypes, aliasTypes } =  modules?.Checker ? modules: window;
 const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true});
 const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
-import * as values_ from './values.mjs';
+import * as values_ from './values.js';
 const values = Object.assign({}, values_);
 
 const types = [...primitiveTypes,...structuralTypes,...otherTypes.map(_=>_.alias),...aliasTypes.map(_=>_.alias)];

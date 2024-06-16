@@ -1,4 +1,4 @@
-const modules = await import('../../index.mjs');
+const modules = await import('../../index.js');
 const { Checker, MicroTest } =  modules;
 const checker = new Checker();
 const { as, is}  = checker;

@@ -1,8 +1,9 @@
 {
   "name": "@pro-script/as-is",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
-  "main": "index.mjs",
+  "main": "index.js",
+  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/as-is.common.js",
@@ -16,13 +17,13 @@
   },
   "directories": {},
   "scripts": {
-    "test": "node tests/pro-script.test.mjs",
-    "test:esm": "export NODE_ENV=esm && node tests/pro-script.test.mjs",
+    "test": "node tests/pro-script.test.js",
+    "test:esm": "export NODE_ENV=esm && node tests/pro-script.test.js",
     "test:browser": "npx browser-sync --start --no-online ",
-    "build": "node build.mjs",
-    "build:esm": "export NODE_ENV=esm && node build.mjs",
-    "build:common": "export NODE_ENV=common && node build.mjs",
-    "build:browser": "export NODE_ENV=browser && node build.mjs"
+    "build": "node build.config.js",
+    "build:esm": "export NODE_ENV=esm && node build.config.js",
+    "build:common": "export NODE_ENV=common && node build.config.js",
+    "build:browser": "export NODE_ENV=browser && node build.config.js"
   },
   "keywords": [
     "as-is",
@@ -81,7 +82,7 @@
   "author": "Volodymyr Kotov (aka Kotowolod) <kotowolod@gmail.com> UKRAINE",
   "license": "MIT",
   "files": [
-    "*.mjs",
+    "*.js",
     "index.html",
     "/lib/*.*",
     "/tests/*.*",
@@ -89,6 +90,7 @@
     "/vendor/*.*",
     "/public/*.*",
     "/dist/*.*",
+    "/documentation/*.*",
     "/lib/types/*.*",
     "/lib/classes/*.*",
     "README.md",
