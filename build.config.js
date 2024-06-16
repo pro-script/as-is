@@ -1,4 +1,4 @@
-import { Builder } from './lib/classes/Builder.class.mjs';
+import { Builder } from './lib/classes/Builder.class.js';
 
 export const buildConfig = {
     browser: {

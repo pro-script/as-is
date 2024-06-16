@@ -1,5 +1,5 @@
-import primitiveTypes from '../lib/types/primitiveTypes.mjs';
-import structuralTypes from '../lib/types/structuralTypes.mjs';
+import primitiveTypes from '../lib/types/primitiveTypes.js';
+import structuralTypes from '../lib/types/structuralTypes.js';
 
 export const string_ = '';
 export const number_ = 2;
