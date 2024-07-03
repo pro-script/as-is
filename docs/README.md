@@ -1,3 +1,8 @@
+<span style="display:block;text-align:center">
+    <img src="logo.png">
+    <a href="https://pro-script.dev"><h1>https://pro-script.dev</h1></a>
+</span>
+
 # Pro-script Library Documentation
 
 ## Overview
