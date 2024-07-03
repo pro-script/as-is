@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, strict object and more.",
   "main": "index.js",
   "type": "module",
@@ -85,6 +85,7 @@
     "*.js",
     "index.html",
     "/lib/*.*",
+    "/docs/*.*",
     "/tests/*.*",
     "/tests/macroTests/*.*",
     "/vendor/*.*",
