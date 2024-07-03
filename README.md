@@ -1,4 +1,4 @@
-# @pro-script/as-is v1.2.0
+# @pro-script/as-is v1.2
 Check and validate your types at runtime. 
 Check and validate values also with [@pro-script/as-is-plugins](https://www.npmjs.com/package/@pro-script/as-is-plugins)
 
@@ -27,12 +27,12 @@ npm install @pro-script/as-is
 ```
 For a browser without module
 ```html
-<script src="https://www.unpkg.com/@pro-script/as-is@latest/index.js"></script>
+<script src="https://www.unpkg.com/@pro-script/as-is"></script>
 ````
 For a browser with module
 ```html
 <script type="module">
-    import { Checker } from "https://www.unpkg.com/@pro-script/as-is@latest/index.js";
+    import { Checker } from "https://www.unpkg.com/@pro-script/as-is";
     
     ...
 </script>
@@ -47,7 +47,7 @@ const { as, is, ... } = new Checker();
 ```
 Node.js common modules
 ```javascript
-const { Checker } = require('@pro-script/as-is/dist/as-is.common');
+const { Checker } = require('@pro-script/as-is');
 
 const { as, is, ... } = new Checker();
 ```
@@ -58,7 +58,7 @@ const { as, is, ... } = new Checker();
 Browser with module
 ```html
 <script type="module">
-    import { Checker } from "https://www.unpkg.com/@pro-script/as-is@latest/dist/as-is.esm.mjs";
+    import { Checker } from "https://www.unpkg.com/@pro-script/as-is";
 
     const { as, is, ... } = new Checker();
 </script>
@@ -68,7 +68,7 @@ Browser with importmap
 <script type="importmap">
   {
     "imports": {
-      "@pro-script/as-is": "https://www.unpkg.com/@pro-script/as-is@latest/dist/as-is.esm.mjs",
+      "@pro-script/as-is": "https://www.unpkg.com/@pro-script/as-is",
     }
   }
 </script>
@@ -79,6 +79,14 @@ Browser with importmap
 </script>
 
 ```
+If for some reason the module isn't switching to the correct URL, make sure to check the dist folder.
+```bash
+@pro-script/as-is@latest/dist/
+  as-is.browser.js
+  as-is.common.js
+  as-is.esm.mjs
+```
+
 
 
 # Summary of Features
@@ -243,4 +251,4 @@ If you got this error:
 Please check if you put a semicolon ';' at the end of line before.
 
 ## No dependencies
-[<- go back](#please-read-the-pro-script-concept-first)
+[<- go back](#pro-scriptas-is-v120)
