@@ -83,6 +83,7 @@ This library provides a comprehensive framework for type checking, utility funct
     - [NPI](#npi)
 8. [String Validators](#string-validators)
    - [Alphabetic](#alphabetic)
+   - [Digit](#digit)
    - [Lowercase](#lowercase)
    - [Uppercase](#uppercase)
    - [CamelCase](#camelcase)
@@ -2281,6 +2282,31 @@ is.alphabetic('hello123');  // Returns false
 
 as.alphabetic('hello');  // Returns 'hello'
 as.alphabetic('hello123');  // Throws TypeError: String is not alphabetic
+```
+### Digit
+```javascript
+is.digit(value) -> true | false
+as.digit(value) -> value | TypeError: String is not digit
+```
+**Description:**
+
+Checks if the provided argument is an digit string.
+
+- **is.digit(arg):**
+    - Returns `true` if `arg` contains only digit characters.
+    - Returns `false` otherwise.
+
+- **as.digit(arg):**
+    - Returns `arg` if it contains only digit characters.
+    - Throws `TypeError` if `arg` does not contain only digit characters.
+
+**Example:**
+```javascript
+is.digit('123');  // Returns true
+is.digit('hello123');  // Returns false
+
+as.digit('123');  // Returns '123'
+as.digit('hello123');  // Throws TypeError: String is not digit
 ```
 
 ### Lowercase
