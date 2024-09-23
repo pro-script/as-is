@@ -311,13 +311,13 @@ class Checker {
 
     static browser(params) {
         let result = Checker.CheckPlatform(params, 'navigator');
-        return  result ? window.navigator: result;
+        return  result ? window?.navigator: result;
     }
 
     static browserFromList(params) {
         const [$type] = params;
         let meOut = Checker.CheckPlatform(params, 'navigator');
-        meOut && (meOut = window.navigator.userAgent
+        meOut && (meOut = window?.navigator?.userAgent
             .includes($type.toString().replace(/./, firstLetter => firstLetter.toUpperCase())) && window.navigator);
         return meOut;
     }
