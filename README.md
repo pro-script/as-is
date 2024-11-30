@@ -1,6 +1,5 @@
 <span style="display:block;text-align:center">
     <img src="logo.png">
-    <a href="https://pro-script.dev"><h1>https://pro-script.dev</h1></a>
 </span>
 
 # Pro-script Library Documentation
@@ -180,7 +179,7 @@ import { Checker } from '@pro-script/as-is';
 import { NumbersValidator } from '@pro-script/as-is-plugins/numbers';
 import { StringsValidator } from '@pro-script/as-is-plugins/strings';
 
-const { as, is, ... } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
+const { as, is } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
 ```
 
 ### Node.js (CommonJS)
@@ -189,14 +188,14 @@ const { Checker } = require('@pro-script/as-is');
 const { NumbersValidator } = require('@pro-script/as-is-plugins/numbers');
 const { StringsValidator } = require('@pro-script/as-is-plugins/strings');
 
-const { as, is, ... } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
+const { as, is } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
 ```
 
 ### Browser
 Without module:
 ```html
 <script>
-    const { as, is, ... } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
+    const { as, is } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
 </script>
 ```
 
@@ -207,7 +206,7 @@ With module:
     import { NumbersValidator } from "https://www.unpkg.com/@pro-script/as-is-plugins/numbers";
     import { StringsValidator } from "https://www.unpkg.com/@pro-script/as-is-plugins/strings";
 
-    const { as, is, ... } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
+    const { as, is } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
 </script>
 ```
 
@@ -227,9 +226,30 @@ With import map:
     import { NumbersValidator } from '@pro-script/as-is-plugins/numbers';
     import { StringsValidator } from '@pro-script/as-is-plugins/strings';
 
-    const { as, is, ... } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
+    const { as, is } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
 </script>
 ```
+## Everything in one code block
+```javascript
+const checker = new Checker({ 
+    'IF/ELSE/END': true, 
+    strict: true, 
+    Enum: true, 
+    utility: true,
+    integrate: Object.assign(NumbersValidator, StringsValidator) });
+const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
+```
+## in global scope
+```javascript
+Object.assign(global, { multi, Interface, as, is, Enum });
+```
+or
+```javascript
+Object.assign(window, { multi, Interface, as, is, Enum });
+```
+After that you can use an as or is etc in other files.
+
 
 ## Summary of Features
 

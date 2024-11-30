@@ -4,8 +4,8 @@ let filePath, env;
 try { env = process?.env?.NODE_ENV } catch (e){ env = 'esm' }
 
 switch(env){
-    // case 'esm': filePath = '../dist/as-is.esm.mjs';
-    case 'esm': filePath = '../index.js';
+    case 'esm': filePath = '../dist/as-is.esm.mjs';
+    // case 'esm': filePath = '../index.js';
         break;
     case 'browser': filePath = '../dist/as-is.browser.js';
         break;
