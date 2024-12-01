@@ -17,7 +17,7 @@ export const buildConfig = {
         out: 'fileOut',
         pattern: 'constPattern',
         commonExport: true,
-        path: './dist/as-is.common.cjs'
+        path: './dist/as-is.common.cjs',
     }
 };
 

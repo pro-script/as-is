@@ -20,7 +20,7 @@ import MacroValues from './macroTests/values.macro.test.js';
 const { Checker, BaseInterface, MicroTest, Utility, primitiveTypes, structuralTypes,
     otherTypes, aliasTypes } =  modules?.Checker ? modules: window;
 const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true });
-const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+const { multi, Interface, Type, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
 import * as values_ from './values.js';
 const values = Object.assign({}, values_);
@@ -50,6 +50,15 @@ let { IUser } = Interface({
         name: as.string,
         birthDate: as.date,
         prop: multi`nullStringNumberUndefined`
+    }
+});
+const { TUser } = Type({
+    TUser: {
+        name: as.string,
+        birthDate: as.date,
+        avatar: (value)=> {
+            as.string(value);
+        }
     }
 });
 
@@ -438,4 +447,19 @@ START.all
         }
     }
     STOP.InterfaceNegative
+    START.TypePositive
+    {
+        IS.object(as.TUser({ name: 'string', birthDate: new Date()}));
+        IS.object(as.TUser({ name: 'string', birthDate: new Date(), avatar: 'url'}));
+    }
+    STOP.TypePositive
+    START.TypeNegative
+    {
+        try {
+            as.TUser({ name: 0, birthDate: new Date()});
+        } catch (e) {
+            CHECK[`as.TUser(${{}}) throw an error`](true);
+        }
+    }
+    STOP.TypeNegative
 } FINISH.all;
