@@ -3,6 +3,7 @@
 </span>
 
 # Pro-script Library Documentation
+## New functionality of Types was added.
 
 ## Overview
 This library provides a comprehensive framework for type checking, utility functions, and macros for automated testing in JavaScript environments. It offers tools to validate types, manage enumerations, and enhance code quality through structured checks and assertions.
@@ -311,6 +312,7 @@ is.date(new Date);
 is.class(Date) or is.class(new Date)
 ```
 **Interface**
+Interfaces works only in the set way where IName = { * interface data * }, not like IName({ * interface data * })
 ```js
 const { IUser } = Interface({
             IUser: {
@@ -327,6 +329,22 @@ function example(name, age,  _ = as.IUser = { name, age }) {
         }
 
 as.StringNumber(example({ name: 'text', age: 12, pages:['page'] }));
+```
+**Types**
+Types works only in the apply way where TName({ * types data * }), not like interfaces TName = { * types data * }
+```js
+const { multi, Interface, Types, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+
+const { TUser } = Types({
+            IUser: {
+                name: as.string,
+                birthDate: as.date,
+                age: (value)=> {
+                    // any code here to check the value 
+                }
+            }
+});
+as.TUser({ name: 'Jesus', age: 2022, birthDate: 'Sat Apr 7 0:0:0 GMT+0200 (Central European Summer Time)'});
 ```
 
 
