@@ -1,6 +1,6 @@
 {
   "name": "@pro-script/as-is",
-  "version": "1.5.0",
+  "version": "1.5.10",
   "description": "Check your types at runtime with ESNext syntax by meta programing in node.js and browser with interfaces, types, strict object and more.",
   "main": "index.js",
   "type": "module",
@@ -29,6 +29,7 @@
     "as-is",
     "js-inteface",
     "interface-check",
+    "types-check",
     "javascript",
     "ESNext",
     "typechecker",
@@ -109,6 +110,7 @@
     "terser": "^5.36.0"
   },
   "dependencies": {
-    "@pro-script/as-is-plugins": "^0.4.0"
+    "@pro-script/as-is-plugins": "^0.4.0",
+    "docsify": "^4.13.1"
   }
 }

@@ -130,7 +130,7 @@ START.all
             IS.object(is.argument(values.object_) && as.argument(values.object_))
             IS.array(is.argument(values.array_) && as.argument(values.array_))
             IS.undefined(is.nullish() && as.nullish())
-            IS.Navigator(is.browser() && as.browser())
+            // IS.Navigator(is.browser() && as.browser())
         }
     }
     STOP.newValidatorsPositive

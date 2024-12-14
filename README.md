@@ -3,7 +3,48 @@
 </span>
 
 # Pro-script Library Documentation
-## New functionality of Types was added.
+https://pro-script.dev
+
+https://pro-script.gitbook.io/as-is
+## The NEW Enum functionality !!!
+This is example of old variant
+```javascript
+Enum.init('enum object here'); // where init is mandatory
+```
+This is new functionality
+```javascript
+Enum.roles({ // now roles it's a name of stored enum inside of the as/is proxy
+    admin: 0,
+    user: 1
+});
+as.roles('admin'); // -> admin
+as.roles('fakeRole'); // -> TypeError: String is not a(an) member of roles enum
+
+```
+Ofc an old Enum checker works too
+```javascript
+const enumName = Enum.roles({ 
+    admin: 0,
+    user: 1
+});
+as.Enum(enumName); // -> Enum { '0': 'admin', '1': 'user', admin: 0, user: 1 }
+```
+# Now you can use enums in types like this
+```javascript
+const { IUser } = Type({
+    IUser: {
+        name: as.string,
+        email: as.email,
+        password: as.string,
+        avatar: (value)=> {
+            as.url(value);
+            as.minStr({arg: value, value: 3});
+            as.maxStr({arg: value, value: 40});
+        },
+        role: as.roles
+    }
+});
+```
 
 ## Overview
 This library provides a comprehensive framework for type checking, utility functions, and macros for automated testing in JavaScript environments. It offers tools to validate types, manage enumerations, and enhance code quality through structured checks and assertions.
@@ -1240,12 +1281,12 @@ as.any(123);        // Returns 123
 ## Enum type
 ### Enum type Basic
 ```js
-Enum.init('enum object here')
+Enum['name of stored enum']('enum object here')
 ```
 ### Enum type Basic usage
 Use increment
 ```js
-Enum.init({
+Enum.color({
     RED: 0,
     GREEN: Enum.inc,
     BLUE: Enum.inc,
@@ -1259,10 +1300,12 @@ Enum.init({
 //   GREEN: 1,
 //   BLUE: 2
 // }
+as.color('RED');// -> 'RED'
+as.color('RED2');// -> TypeError String is not a member of color enum
 ```
 Use decrement
 ```js
-Enum.init({
+Enum.house({
     ROOF: 2,
     FLOOR: Enum.dec,
     BASEMENT: Enum.dec,
@@ -1278,7 +1321,7 @@ Enum.init({
 ```
 Use both
 ```js
-Enum.init({
+Enum.colorAndHouse({
     RED: 0,
     GREEN: Enum.inc,
     BLUE: Enum.inc,
@@ -1303,7 +1346,7 @@ Enum.init({
 ```
 Use with step
 ```js
-Enum.init({
+Enum.color({
     [Enum.step]: 10, // ['Enum.step'] the same but with a quotes
     RED: Enum.inc,
     GREEN: Enum.inc,
@@ -1318,7 +1361,7 @@ Enum.init({
 //   GREEN: 20,
 //   BLUE: 30
 // }
-const enumExample = Enum.init({
+const enumExample = Enum.house({
     [Enum.step]: 10,
     ROOF: Enum.dec,
     FLOOR: 30,
@@ -3806,7 +3849,7 @@ as.NodeJs() //  process | TypeError
 process !== undefined // true
 
 is.browser() // true
-ss.browser() // navigator | TypeError
+as.browser() // navigator | TypeError
 // the same of
 navigator !== undefined  // true
     
