@@ -3,6 +3,9 @@
 </span>
 
 # Pro-script Library Documentation
+https://pro-script.dev
+
+https://pro-script.gitbook.io/as-is
 ## The NEW Enum functionality !!!
 This is example of old variant
 ```javascript
