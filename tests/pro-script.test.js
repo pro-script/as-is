@@ -8,6 +8,8 @@ switch(env){
     // case 'esm': filePath = '../index.js';
         break;
     case 'browser': filePath = '../dist/as-is.browser.js';
+    // case 'browser': filePath = '../index.js';
+
         break;
     default:
         filePath = '../index.js';
@@ -29,7 +31,7 @@ const types = [...primitiveTypes,...structuralTypes,...otherTypes.map(_=>_.alias
 
 const examples = [...values.primitive_, ...values.structural_];
 
-const enumExample = Enum.init({
+const enumExample = Enum.weekday({
     [Enum.step]: 1,
     Monday: 1,
     Tuesday: Enum.inc,
@@ -61,8 +63,6 @@ const { TUser } = Type({
         }
     }
 });
-
-console.log(get.type());
 
 START.all
 {
@@ -418,6 +418,7 @@ START.all
     STOP.multiTypeNegative
     START.EnumPositive
     {
+        console.log(as.Enum(enumExample));
         IS.Enum(enumExample);
     }
     STOP.EnumPositive
@@ -430,6 +431,21 @@ START.all
         }
     }
     STOP.EnumNegative
+    START.EnumWeekdayPositive
+    {
+        IS.weekday('Monday');
+
+    }
+    STOP.EnumWeekdayPositive
+    START.EnumWeekdayNegative
+    {
+        try {
+            as.weekday('WeekDay')
+        } catch (e) {
+            CHECK[`as.weekday('WeekDay') throw an error`](true);
+        }
+    }
+    STOP.EnumWeekdayNegative
     START.InterfacePositive
     {
         IS.object(IUser = { name: 'string', birthDate: new Date()});

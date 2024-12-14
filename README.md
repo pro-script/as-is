@@ -333,9 +333,9 @@ as.StringNumber(example({ name: 'text', age: 12, pages:['page'] }));
 **Types**
 Types works only in the apply way where TName({ * types data * }), not like interfaces TName = { * types data * }
 ```js
-const { multi, Interface, Types, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+const { multi, Interface, Type, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
 
-const { TUser } = Types({
+const { TUser } = Type({
             IUser: {
                 name: as.string,
                 birthDate: as.date,
