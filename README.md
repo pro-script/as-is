@@ -3866,13 +3866,13 @@ Checks if the provided string contains **at least one lowercase letter** (`a-z`)
     - Returns `false` otherwise.
 
 - **as.hasLowercase({ arg })**:
-    - Returns the original string `arg` if contains **at least one lowercase letter.
+    - Returns the original string `arg` if contains **at least one lowercase letter**.
     - Throws `TypeError` (e.g., `"String must contain at least one lowercase letter"`) otherwise.
 
 **Example:**
 ```javascript
 is.hasLowercase('Hello');  // Returns true
-is.hasLowercase('Hello');  // Returns false
+is.hasLowercase('HELLO');  // Returns false
 
 as.hasLowercase('Hello');  // Returns 'Hello'
 as.hasLowercase('Hello');  // Throws TypeError: String must contain at least one lowercase letter
@@ -3920,7 +3920,7 @@ as.hasSpecialCharacter(string) -> string | TypeError: String must contain at lea
 Checks if the provided string contains **at least one special character** (example, `!@#$%^&*(),.?":{}|<>`).
 
 - **is.hasSpecialCharacter({ arg })**:
-    - Returns `true` contains **at least one special character.
+    - Returns `true` contains **at least one special character**.
     - Returns `false` otherwise.
 
 - **as.hasSpecialCharacter({ arg })**:
