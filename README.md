@@ -45,6 +45,12 @@ const { IUser } = Type({
     }
 });
 ```
+### The Check password added to strings validator.
+```javascript
+as.password('Password1!') // -> Password1!'
+as.password('Password1') // -> TypeError
+```
+
 
 ## Overview
 This library provides a comprehensive framework for type checking, utility functions, and macros for automated testing in JavaScript environments. It offers tools to validate types, manage enumerations, and enhance code quality through structured checks and assertions.
@@ -179,6 +185,11 @@ This library provides a comprehensive framework for type checking, utility funct
    - [Date After Specific Date](#date-after-specific-date)
    - [Maximum String Length](#maximum-string-length)
    - [Minimum String Length](#minimum-string-length)
+   - [Has Uppercase](#has-uppercase)
+   - [Has Lowercase](#has-lowercase)
+   - [Has Digit](#has-digit)
+   - [Has Special Character](#has-special-character)
+   - [Password](#password)
 9. [Utility](#Utility)
 10. [Settings](#settings)
 11. [Aliases](#aliases)
@@ -2487,10 +2498,10 @@ Checks if the provided argument is a snakeCase string.
 
 **Example:**
 ```javascript
-is.snakeCase('snakeCase');  // Returns true
+is.snakeCase('snake_Case');  // Returns true
 is.snakeCase('SnakeCase');   // Returns false
 
-as.snakeCase('snakeCase');  // Returns 'snakeCase'
+as.snakeCase('snake_Case');  // Returns 'snakeCase'
 as.snakeCase('SnakeCase');   // Throws TypeError: String is not snakeCase
 ```
 
@@ -3807,6 +3818,159 @@ is.minStr({ arg: '12', value: 3 });  // Returns false
 as.minStr({ arg: '123', value: 3 });  // Returns '123'
 as.minStr({ arg: '12', value: 3 });  // Throws TypeError: String length is not sufficient
 ```
+
+
+### Has Uppercase
+
+```javascript
+is.hasUppercase(string) -> true | false
+as.hasUppercase(string) -> string | TypeError: String must contain at least one uppercase letter
+```
+
+**Description:**
+
+Checks if the provided string contains **at least one uppercase letter** (`A-Z`).
+
+- **is.hasUppercase({ arg })**:
+    - Returns `true` if the string contains uppercase letters.
+    - Returns `false` otherwise.
+
+- **as.hasUppercase({ arg })**:
+    - Returns the original string `arg` if it contains at least one uppercase letter.
+    - Throws `TypeError` (e.g., `"String must contain at least one uppercase letter"`) otherwise.
+
+**Example:**
+```javascript
+is.hasUppercase({ arg: 'Hello' });  // Returns true
+is.hasUppercase({ arg: 'hello' });  // Returns false
+
+as.hasUppercase({ arg: 'Hello' });  // Returns 'Hello'
+as.hasUppercase('Hello');  // Throws TypeError: String must contain at least one uppercase letter
+```
+
+---
+
+### Has Lowercase
+
+```javascript
+is.hasLowercase(string) -> true | false
+as.hasLowercase(string) -> string | TypeError: String must contain at least one lowercase letter
+```
+
+**Description:**
+
+Checks if the provided string contains **at least one lowercase letter** (`a-z`).
+
+- **is.hasLowercase({ arg })**:
+    - Returns `true` if the string contains lowercase letters.
+    - Returns `false` otherwise.
+
+- **as.hasLowercase({ arg })**:
+    - Returns the original string `arg` if contains **at least one lowercase letter**.
+    - Throws `TypeError` (e.g., `"String must contain at least one lowercase letter"`) otherwise.
+
+**Example:**
+```javascript
+is.hasLowercase('Hello');  // Returns true
+is.hasLowercase('HELLO');  // Returns false
+
+as.hasLowercase('Hello');  // Returns 'Hello'
+as.hasLowercase('Hello');  // Throws TypeError: String must contain at least one lowercase letter
+```
+
+### Has Digit
+
+```javascript
+is.hasDigit(string) -> true | false
+as.hasDigit(string) -> string | TypeError: String must contain at least one digit
+```
+
+**Description:**
+
+Checks if the provided string contains **at least one digit** (`0-9`).
+
+- **is.hasDigit({ arg })**:
+    - Returns `true` if the string has a digit.
+    - Returns `false` otherwise.
+
+- **as.hasDigit({ arg })**:
+    - Returns the original string `arg` if string contains **at least one digit**.
+    - Throws `TypeError` (e.g., `"String must contain at least one digit"`) otherwise.
+
+**Example:**
+```javascript
+is.hasDigit('Hello123');  // Returns true
+is.hasDigit('Hello');     // Returns false
+
+as.hasDigit('Hello123');  // Returns 'Hello123'
+as.hasDigit('Hello');     // Throws TypeError: String must contain at least one digit
+```
+
+---
+
+### Has Special Character
+
+```javascript
+is.hasSpecialCharacter(string) -> true | false
+as.hasSpecialCharacter(string) -> string | TypeError: String must contain at least one special character
+```
+
+**Description:**
+
+Checks if the provided string contains **at least one special character** (example, `!@#$%^&*(),.?":{}|<>`).
+
+- **is.hasSpecialCharacter({ arg })**:
+    - Returns `true` contains **at least one special character**.
+    - Returns `false` otherwise.
+
+- **as.hasSpecialCharacter({ arg })**:
+    - Returns the original string  `arg`, if it contains **at least one special character**.
+    - Throws `TypeError` (e.g., `"String must contain at least one special character"`) otherwise.
+
+**Example:**
+```javascript
+is.hasSpecialCharacter('Hello!');  // Returns true
+is.hasSpecialCharacter('Hello');   // Returns false
+
+as.hasSpecialCharacter('Hello!');  // Returns 'Hello!'
+as.hasSpecialCharacter('Hello');   // Throws TypeError: String must contain at least one special character
+```
+
+---
+
+### Password
+
+```javascript
+is.password(string) -> true | false
+as.password(string) -> string | TypeError: String must meet password requirements
+```
+
+**Description:**
+
+Checks if the provided string meets **all** of the following requirements:
+- Contains at least one uppercase letter.
+- Contains at least one lowercase letter.
+- Contains at least one digit.
+- Contains at least one special character.
+- Has a minimum 8 characters.
+
+- **is.password({ arg })**:
+    - Returns `true` string meets **all** of the following requirements
+    - Returns `false` otherwise.
+
+- **as.password({ arg })**:
+    - Returns `arg`, if string meets **all** of the following requirements.
+    - Throws `TypeError` (example, `"String must meet password requirements"`) otherwise.
+
+**Example:**
+```javascript
+is.password('Hello1!');      // Returns true
+is.password('Hello');        // Returns false
+
+as.password('Hello1!');      // Returns 'Hello1!'
+as.password('Hello');        // Throws TypeError: String must meet password requirements
+```
+
 
 ## Settings
 To customize error messages, you can override `Checker.errorMsg`. To disable throwing errors, set `checker.disabled = true`.
