@@ -6,6 +6,7 @@
 https://pro-script.dev
 
 https://pro-script.gitbook.io/as-is
+### Please update to 1.6+ version. Major bugs have been fixed, and a validation error feature has been added. 
 ## The NEW Enum functionality !!!
 This is example of old variant
 ```javascript
