@@ -59,7 +59,7 @@ const { TUser } = Type({
         name: as.string,
         birthDate: as.date,
         avatar: (value)=> {
-            as.string(value);
+            as.stringUndefined(value);
             return value;
         }
     }
@@ -467,7 +467,7 @@ START.all
     START.TypePositive
     {
         IS.object(as.TUser({ name: 'string', birthDate: new Date()}));
-        IS.object(as.TUser({ name: 'string', birthDate: new Date(), avatar: 'https://avatarov.net'}));
+        IS.object(as.TUser({ name: 'string', birthDate: new Date(), avatar: 'https://www.youtube.com'}));
     }
     STOP.TypePositive
     START.TypeNegative

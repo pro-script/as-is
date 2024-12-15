@@ -78,7 +78,6 @@ class Checker {
     #interfaces = {};
     #types = {};
     #enums = {};
-    #validationErrors=[];
 
     typeError(params, typeError = true ) {
         if(typeError && !this.disabled) throw new TypeError(this.errorMsg(params))
@@ -144,11 +143,6 @@ class Checker {
         return new Proxy(receiver, {
             get(target, name){
                 return target
-            },
-            apply(target, name, value) {
-                if(!Checker.primitive([target[name], 'function']))
-                    throw new TypeError(`INTERFACE: Invalid property name "${name}" in property list { ${Object.keys(target).join(', ')} }`);
-                return target[name](value);
             },
             isExtensible() {
                 return false;
@@ -337,22 +331,22 @@ class Checker {
 
     deepCheck(...params) {
         const [ arg, $type, ruleName ] = params;
-        Object.keys(arg).forEach((property)=>{
-            this.is.function(this.#types[$type][ruleName][property])
+        let errors;
+        errors = Object.keys(arg).filter((property)=> {
+            return !(this.is.function(this.#types[$type][ruleName][property])
                 ? Checker.typeChecking.bind(this)(this, [$type, ruleName, property, arg])
-                // ? this.#validationErrors.push({data:{ property, value: arg[property], type: $type }}) && this.#types[$type][ruleName][property](arg[property])
-                : this.typeError([arg, $type]);
+                : this.typeError([arg, $type]));
         });
-        return arg;
+        return !errors.length ? arg: null;
     }
 
     static typeChecking(self, params){
         const [$type, ruleName, property, arg] = params;
         const result = self.#types[$type][ruleName][property](arg[property]);
         if(!result) {
-            // self.#validationErrors.push({data:{ property, value: arg[property], type: $type }});
             self.validationError({ property, value: arg[property], type: $type });
-        }
+            return false;
+        } else return true;
     }
 
     static alias(params) {
