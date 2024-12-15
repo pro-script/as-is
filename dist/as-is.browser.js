@@ -32,6 +32,7 @@ class Checker {
         options.Enum && (this.Enum = this.#enumProxy());
         options.integrate || (options.integrate = {});
         this.errorMsg = options.errorMsg || Checker.errorMsg;
+        this.validationErrorMsg = options.validationErrorMsg || Checker.validationErrorMsg;
         this.enabled = true;
         this.is = this.#proxyIs;
         this.optional = this.#optionalAs;
@@ -77,9 +78,17 @@ class Checker {
     #interfaces = {};
     #types = {};
     #enums = {};
+    #validationErrors=[];
 
     typeError(params, typeError = true ) {
-        if(typeError) throw new TypeError(this.errorMsg(params));
+        if(typeError && !this.disabled) throw new TypeError(this.errorMsg(params))
+        else console.error(`TYPE ERROR: ${this.errorMsg(params)}`);
+        return false;
+    }
+
+    validationError(params, typeError = true ) {
+        if(typeError && !this.disabled) throw new TypeError(this.validationErrorMsg(params))
+        else console.error(`VALIDATION ERROR: ${this.validationErrorMsg(params)}`);
         return false;
     }
 
@@ -136,6 +145,11 @@ class Checker {
             get(target, name){
                 return target
             },
+            apply(target, name, value) {
+                if(!Checker.primitive([target[name], 'function']))
+                    throw new TypeError(`INTERFACE: Invalid property name "${name}" in property list { ${Object.keys(target).join(', ')} }`);
+                return target[name](value);
+            },
             isExtensible() {
                 return false;
             },
@@ -173,9 +187,6 @@ class Checker {
                 target.#apply(()=>{}, target, [value]);
             }
             return value;
-        },
-        apply(target, thisArg, argArray) {
-            console.log('here');
         }
     });
 
@@ -215,7 +226,7 @@ class Checker {
     #lastCheck(target, typeValue, value ) {
         let meOut;
         switch (true){
-            case !!this.#types[typeValue]: meOut = this.deepCheck(value, typeValue, 'type');
+            case !!this.#types[typeValue]: meOut = this.deepCheck(value, typeValue, 'types');
                 break;
             case !!this.#enums[typeValue]: meOut =  Object.keys(this.#enums[typeValue]).includes(value) ? value : this.typeError([value, `member of ${typeValue} enum`]);
                 break;
@@ -320,7 +331,7 @@ class Checker {
         let result = (Checker.nullish([checkedValue]) || !!checkedValue)
             ? (arg === undefined && !Checker.primitive([checkedValue, 'boolean']) || arg === false ? checkedValue: arg)
             : false;
-        if(this.error){ return result !== false ? result: this.typeError([arg, $type]); }
+        if(this.error){ return result !== false ? result: this.typeError([arg, $type, result]); }
         else { return result?.name !==this.constructor.name ? result: {}; }
     }
 
@@ -328,10 +339,20 @@ class Checker {
         const [ arg, $type, ruleName ] = params;
         Object.keys(arg).forEach((property)=>{
             this.is.function(this.#types[$type][ruleName][property])
-                ? this.#types[$type][ruleName][property](arg[property])
+                ? Checker.typeChecking.bind(this)(this, [$type, ruleName, property, arg])
+                // ? this.#validationErrors.push({data:{ property, value: arg[property], type: $type }}) && this.#types[$type][ruleName][property](arg[property])
                 : this.typeError([arg, $type]);
         });
         return arg;
+    }
+
+    static typeChecking(self, params){
+        const [$type, ruleName, property, arg] = params;
+        const result = self.#types[$type][ruleName][property](arg[property]);
+        if(!result) {
+            // self.#validationErrors.push({data:{ property, value: arg[property], type: $type }});
+            self.validationError({ property, value: arg[property], type: $type });
+        }
     }
 
     static alias(params) {
@@ -586,6 +607,11 @@ class Checker {
             meOut = `Can\'t handle this type. It's possible you are using system type like [Module] or has an as-is syntax error`;
         }
         return meOut;
+    }
+
+    static validationErrorMsg(params){
+        const { property, value, type } = params;
+        return `The value [${value}] of the property [${property}] fails to pass the [${type}] check`;
     }
 
 }

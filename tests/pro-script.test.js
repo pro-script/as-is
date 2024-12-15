@@ -60,6 +60,7 @@ const { TUser } = Type({
         birthDate: as.date,
         avatar: (value)=> {
             as.string(value);
+            return value;
         }
     }
 });
@@ -466,7 +467,7 @@ START.all
     START.TypePositive
     {
         IS.object(as.TUser({ name: 'string', birthDate: new Date()}));
-        IS.object(as.TUser({ name: 'string', birthDate: new Date(), avatar: 'url'}));
+        IS.object(as.TUser({ name: 'string', birthDate: new Date(), avatar: 'https://avatarov.net'}));
     }
     STOP.TypePositive
     START.TypeNegative
