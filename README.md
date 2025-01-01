@@ -6,56 +6,6 @@
 https://pro-script.dev
 
 https://pro-script.gitbook.io/as-is
-### Please update to 1.6+ version. Major bugs have been fixed, and a validation error feature has been added. 
-## The NEW Enum functionality !!!
-This is example of old variant
-```javascript
-Enum.init('enum object here'); // where init is mandatory
-```
-This is new functionality
-```javascript
-Enum.roles({ // now roles it's a name of stored enum inside of the as/is proxy
-    admin: 0,
-    user: 1
-});
-as.roles('admin'); // -> admin
-as.roles('fakeRole'); // -> TypeError: String is not a(an) member of roles enum
-
-```
-Ofc an old Enum checker works too
-```javascript
-const enumName = Enum.roles({ 
-    admin: 0,
-    user: 1
-});
-as.Enum(enumName); // -> Enum { '0': 'admin', '1': 'user', admin: 0, user: 1 }
-```
-# Now you can use enums in types like this
-```javascript
-const { IUser } = Type({
-    IUser: {
-        name: as.string,
-        email: as.email,
-        password: as.string,
-        avatar: (value)=> {
-            as.url(value);
-            as.minStr({arg: value, value: 3});
-            as.maxStr({arg: value, value: 40});
-            return value;
-        },
-        role: as.roles
-    }
-});
-```
-### The BcryptHash added to strings validator.
-```javascript
-as.BcryptHash('$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06') // -> $2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06'
-as.BcryptHash('not a hash') // -> TypeError
-```
-### Multicheck added to the integrated types
-```javascript
-as.BcryptHashPassword('$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06') // -> $2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06'
-```
 
 ## Overview
 This library provides a comprehensive framework for type checking, utility functions, and macros for automated testing in JavaScript environments. It offers tools to validate types, manage enumerations, and enhance code quality through structured checks and assertions.
@@ -153,6 +103,7 @@ This library provides a comprehensive framework for type checking, utility funct
    - [IP](#ip)
    - [File Extension](#file-extension)
    - [Hex Color](#hex-color)
+   - [Hex String](#hex-string)
    - [Base64](#base64)
    - [Data URL](#data-url)
    - [Credit Card](#credit-card)
@@ -2852,6 +2803,32 @@ is.hexColor('ff00ff');  // Returns false
 as.hexColor('#ff00ff');  // Returns '#ff00ff'
 as.hexColor('ff00ff');  // Throws TypeError: String is not a valid hex color
 ```
+
+### Hex String
+```javascript
+is.hex(value) -> true | false
+as.hex(value) -> value | TypeError: String is not a valid hexadecimal value
+```
+**Description:**
+Checks if the provided argument is a valid hexadecimal string.
+
+**is.hex(arg):**
+    - Returns true if arg is a valid hexadecimal string (contains only characters 0-9 and a-f/A-F).
+    - Returns false otherwise. 
+**as.hex(arg):**
+    - Returns arg if it is a valid hexadecimal string.
+	- Throws TypeError if arg is not a valid hexadecimal string.
+
+**Example:**
+```javascript
+is.hex('a1b2c3');  // Returns true
+is.hex('123XYZ');  // Returns false
+is.hex('ABCDEF123456');  // Returns true
+
+as.hex('a1b2c3');  // Returns 'a1b2c3'
+as.hex('123XYZ');  // Throws TypeError: String is not a valid hexadecimal value
+```
+
 
 ### Base64
 ```javascript
