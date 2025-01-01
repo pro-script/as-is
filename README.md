@@ -41,17 +41,21 @@ const { IUser } = Type({
             as.url(value);
             as.minStr({arg: value, value: 3});
             as.maxStr({arg: value, value: 40});
+            return value;
         },
         role: as.roles
     }
 });
 ```
-### The Check password added to strings validator.
+### The BcryptHash added to strings validator.
 ```javascript
-as.password('Password1!') // -> Password1!'
-as.password('Password1') // -> TypeError
+as.BcryptHash('$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06') // -> $2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06'
+as.BcryptHash('not a hash') // -> TypeError
 ```
-
+### Multicheck added to the integrated types
+```javascript
+as.BcryptHashPassword('$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06') // -> $2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06'
+```
 
 ## Overview
 This library provides a comprehensive framework for type checking, utility functions, and macros for automated testing in JavaScript environments. It offers tools to validate types, manage enumerations, and enhance code quality through structured checks and assertions.
@@ -171,6 +175,7 @@ This library provides a comprehensive framework for type checking, utility funct
    - [DateTime (YYYY-MM-DDTHH:MM:SS)](#datetime-yyyymmddthhmmss)
    - [Date (YYYY-MM-DD)](#date-yyyymmdd)
    - [SHA-256 Hash](#sha-256-hash)
+   - [BcryptHash](#bcrypt-hash)
    - [ISO Time with Seconds](#iso-time-with-seconds)
    - [ISO Timestamp](#iso-timestamp)
    - [ISO Week](#iso-week)
@@ -3426,6 +3431,32 @@ as.hash('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');  //
 as.hash('invalid_hash');  // Throws TypeError: String is not a valid SHA-256 hash
 ```
 
+### Bcrypt Hash
+```javascript
+is.BcryptHash(value) -> true | false
+as.BcryptHash(value) -> value | TypeError: String is not a valid BcryptHash hash
+```
+**Description:**
+
+Checks if the provided argument is a valid SHA-256 hash.
+
+- **is.hash(arg):**
+    - Returns `true` if `arg` is a valid SHA-256 hash.
+    - Returns `false` otherwise.
+
+- **as.hash(arg):**
+    - Returns `arg` if it is a valid SHA-256 hash.
+    - Throws `TypeError` if `arg` is not a valid SHA-256 hash.
+
+**Example:**
+```javascript
+is.BcryptHash('$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06');  // Returns true
+is.BcryptHash('invalid_hash');  // Returns false
+
+as.BcryptHash('$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06');  // Returns '$2b$10$tn8kyfnS.GCNYt6OFQDzIOv2BTQrigHnccmn0bPEyg8I16BJGMm06'
+as.BcryptHash('invalid_hash');  // Throws TypeError: String is not a valid SHA-256 hash
+```
+
 ### ISO Time with Seconds
 ```javascript
 is.isoTimeSecond(value) -> true | false
@@ -4252,7 +4283,8 @@ secondStrict.example2 = 'second';
 secondStrict.values();
 //{ example: 'first', example2: 'second' }
 ```
-### Checking multiple types. It looks like generics in typescript, but more simple implementation.
+### Checking multiple types. 
+It looks like generics in typescript, but more simple implementation.
 When a variable is part of more than one type, you can also check for that.
 
 ***Basic***
@@ -4281,6 +4313,8 @@ const multiType = 'Number|String|Boolean';
 as[multiType]({});
 // TypeError: Object is not a(an) Number|String|Boolean
 ```
+
+```js
 
 ## Macros
 To manage syntax and write human-readable code, you might need metaprogramming tools such as macros. When using the 
