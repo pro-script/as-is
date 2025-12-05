@@ -3,8 +3,6 @@
 </span>
 
 # Pro-script Library Documentation
-https://pro-script.dev
-
 https://pro-script.gitbook.io/as-is
 ### Please update to 1.6+ version. Major bugs have been fixed, and a validation error feature has been added. 
 ## The NEW Enum functionality !!!
@@ -88,6 +86,7 @@ This library provides a comprehensive framework for type checking, utility funct
    - [Class](#class)
    - [Instance](#instance)
    - [Iterator](#iterator)
+   - [undefined](#undefined)
    - [Nullish](#nullish)
    - [Error](#error)
    - [RangeError](#rangeerror)
@@ -283,27 +282,31 @@ With import map:
     const { as, is } = new Checker({ integrate: Object.assign(NumbersValidator, StringsValidator) });
 </script>
 ```
-## Everything in one code block
-```javascript
-const checker = new Checker({ 
-    'IF/ELSE/END': true, 
-    strict: true, 
-    Enum: true, 
-    utility: true,
-    integrate: Object.assign(NumbersValidator, StringsValidator) });
-const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
-const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
-```
 ## in global scope
 ```javascript
 Object.assign(global, { multi, Interface, as, is, Enum });
 ```
 or
+## in global scope
 ```javascript
-Object.assign(window, { multi, Interface, as, is, Enum });
+Object.assign(global, { multi, Interface, as, is, Enum });
 ```
-After that you can use an as or is etc in other files.
+After that you can use an as or is etc in other files without an import.
 
+## Everything in one code block
+```javascript
+import { Checker } from '@pro-script/as-is';
+import { NumbersValidator } from '@pro-script/as-is-plugins/numbers';
+import { StringsValidator } from '@pro-script/as-is-plugins/strings';
+const checker = new Checker({
+    'IF/ELSE/END': true,
+    strict: true,
+    Enum: true,
+    utility: true,
+    integrate: Object.assign(NumbersValidator, StringsValidator) });
+const { multi, Interface, Type, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+Object.assign(global, { multi, Interface, as, is, Enum });
+```
 
 ## Summary of Features
 
@@ -439,7 +442,8 @@ const { as, is } = new Checker;
 All methods without plugins.
 ```javascript
 const checker = new Checker({ 'IF/ELSE/END': true, strict: true, Enum: true, utility: true });
-const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+const { multi, Interface, Type, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
 ```
 All methods with plugins.
@@ -451,7 +455,8 @@ const checker = new Checker({
     utility: true, 
     integrate: Object.assign(NumbersValidator, StringsValidator) 
 });
-const { multi, Interface, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+const { multi, Interface, Type, as, is, IF, ELSE, END, optional, get, macro, strict, Enum }  = checker;
+
 const { START, STOP, FINISH, METHOD, PROPERTY, IS, CHECK, passed, failed } = new MicroTest({ is, as });
 ```
 
@@ -1105,6 +1110,33 @@ is.iterator([]);          // Returns false
 as.iterator(iterator);    // Returns iterator
 as.iterator([]);          // Throws TypeError: Array is not a(an) iterator
 ```
+
+### Undefined
+It's a very specific type checking. To check if a value is exactly undefined. 
+```javascript
+is.undefined(value) -> true | false
+as.undefined(value) -> value | TypeError: [get.type(value)] is not a(an) undefined
+```
+**Description:**
+
+Checks if the provided argument is undefined.
+
+- **is.undefined(arg):**
+    - Returns `true` if `arg` is undefined.
+    - Returns `false` otherwise.
+
+- **as.undefined(arg):**
+    - Returns `arg` if it is undefined.
+    - Throws `TypeError` if `arg` is not 
+**Example:**
+```javascript
+is.undefined(undefined);    // Returns true
+is.undefined('hello');      // Returns false
+
+as.undefined(undefined);    // Returns undefined
+as.undefined('hello');      // Throws TypeError: String is not a(an) undefined
+```
+
 
 ### Nullish
 ```javascript
